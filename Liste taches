@@ -1,0 +1,28 @@
+Document texte résumé Projet:
+
+Objectif: Le but de ce projet est de développer une plateforme numérique intelligente qui regroupe divers
+services/fonctionnalités pour les utilisateurs d'une ville/village intelligent(e) OU d’un bâtiment
+intelligent (maison, entreprise, etc.) OU d’un établissement intelligent (crèche, école, université,musée, hôpital, etc.). Le choix du thème est « libre » dans le sens où chaque groupe peut choisir
+le « cœur de cible » selon les options données.
+
+Donc 3 theme au choix: 
+
+Ville/village intelligent: gestion des transports, signalement des incidents, informations locales,
+réservation de services publics, etc.
+
+Bâtiment:gestion d’accès, informations locales,
+consommation d’énergie, consommation d’eau, gestion de pièces/salles, etc.
+
+Etablissement: gestion d’accès, actualités, le menu de la semaine, consommation d’énergie,
+consommation d’eau, gestion de pièces/salles, etc.
+
+4 Module:
+
+Information page 2-3
+Visualistion page 3-6
+Gestion page 7-8
+Administration 8-9
+
+Framework:
+Vue.js
+....... si vous voulez
