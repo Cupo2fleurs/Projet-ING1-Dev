@@ -7,15 +7,19 @@ try {
 } catch (Exception $ex) {
     die("Erreur : " . $ex->getMessage());
 }
-
-    if(isset($_POST['pseudo'], $_POST['born'], $_POST['sexe'], $_POST['age'], $_POST['grade']) && isset($_FILES['photo'])){
+if (!isset($_SESSION['user_id'])) {
+    echo "<p style='color:red;'>Vous devez être connecté pour modifier votre profil.</p>";
+    exit();
+}
+    if(isset($_POST['ok2'])){
         // Protection contre les failles XSS
+        $id = $_SESSION['user_id'];
         $pseudo = htmlspecialchars($_POST['pseudo']);
         $born = htmlspecialchars($_POST['born']);
         $sexe = htmlspecialchars($_POST['sexe']);
         $age = intval($_POST['age']);
         $grade = htmlspecialchars($_POST['grade']);
-        
+
         $dossier = 'uploads/';
         $nom_fichier = basename($_FILES['photo']['name']);
         $chemin_fichier = $dossier . $nom_fichier;
@@ -28,19 +32,12 @@ try {
         }
 
         // Requête préparée pour éviter les injections SQL
-        $requete = $bdd->prepare("INSERT INTO profil (id, pseudo, age, sexe, born, grade, photo) VALUES (0, :pseudo, :age, :sexe, :born, :grade, :photo)");
-
-        if($requete->execute([
-            "pseudo" => $pseudo,
-            "born" => $born,
-            "sexe" => $sexe,
-            "age" => $age,
-            "grade" => $grade,
-            "photo" => $photo
-        ])){
-            echo "<p style='color:green;'>Inscription réussie !</p>";
+        $requete = $bdd->prepare("UPDATE users SET pseudo = ?, age = ?, sexe = ?, born = ?, grade = ?, photo = ? WHERE id = ?");
+    
+        if ($requete->execute([$pseudo, $age, $sexe, $born, $grade, $photo, $id])) {
+            echo "<p style='color:green;'>Profil mis à jour avec succès !</p>";
         } else {
-            echo "<p style='color:red;'>Erreur lors de l'inscription.</p>";
+            echo "<p style='color:red;'>Erreur lors de la mise à jour.</p>";
         }
     } else {
         echo "<p style='color:red;'>Tous les champs sont obligatoires !</p>";

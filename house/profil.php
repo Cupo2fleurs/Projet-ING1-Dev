@@ -41,7 +41,7 @@
         
     </style>
 <h1>Mon Profil</h1>
-<form id="profilForm" method="POST">
+<form id="profilForm" method="POST" action="traitement.php" enctype="multipart/form-data">
     <div class="rest">
         <label>Pseudonyme</label>
         <input type="text" id="pseudo" name="pseudo" required>
@@ -79,7 +79,7 @@
         <input type="file" id="photo" name="photo" accept="image/*">
         <br />
         <br>
-        <input type="submit" value="Valider" name="ok">
+        <input type="submit" value="Valider" name="ok2">
     </div>
 </form>
 
@@ -91,6 +91,7 @@ document.getElementById("profilForm").addEventListener("submit", function(event)
     event.preventDefault(); // Empêcher le rechargement de la page
 
     var formData = new FormData(this);
+    formData.append("ok2", "1");
 
     fetch("traitement.php", {
         method: "POST",
@@ -105,8 +106,27 @@ document.getElementById("profilForm").addEventListener("submit", function(event)
 });
 </script>
 
-
-
 </body>
 </html>
 
+<?php
+session_start();
+
+try {
+    $pdo_option = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+    $bdd = new PDO('mysql:host=localhost;dbname=utilisateur', 'root', '', $pdo_option);
+} catch (Exception $ex) {
+    die("Erreur : " . $ex->getMessage());
+}
+if (!isset($_SESSION['user_id'])) {
+    echo "<p style='color:red;'>Vous devez être connecté pour modifier votre profil.</p>";
+    exit();
+}
+// Récupérer les infos de l'utilisateur connecté
+$id = $_SESSION['user_id'];
+$requete = $bdd->prepare("SELECT * FROM users WHERE id = ?");
+$requete->execute([$id]);
+$user = $requete->fetch();
+
+
+?>

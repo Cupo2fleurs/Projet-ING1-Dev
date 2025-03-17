@@ -1,6 +1,6 @@
 
 <?php
-
+session_start();
 try{ 
     $pdo_option = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
     $bdd=new PDO('mysql:host=localhost;dbname=utilisateur','root','',$pdo_option);
@@ -26,6 +26,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
     // Vérification du mot de passe hashé
     if ($user && $mdp === $user['mdp']) { 
         // Stocker les informations en session
+        $_SESSION['user_id'] = $user['id'];
         $_SESSION['nom'] = $user['nom'];
         $_SESSION['prenom'] = $user['prenom'];
         echo "Connexion réussie !";
