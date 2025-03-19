@@ -39,6 +39,7 @@ if (!isset($_SESSION['user_id'])) {
     
         if ($requete->execute([$pseudo, $age, $sexe, $born, $grade, $photo, $id])) {
             echo '<script>location.href="Consultobj.php";</script>';
+        }
             exit();
         } else {
             echo "<p style='color:red;'>Erreur lors de la mise à jour.</p>";
