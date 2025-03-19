@@ -5,16 +5,11 @@ services/fonctionnalités pour les utilisateurs d'une ville/village intelligent(
 intelligent (maison, entreprise, etc.) OU d’un établissement intelligent (crèche, école, université,musée, hôpital, etc.). Le choix du thème est « libre » dans le sens où chaque groupe peut choisir
 le « cœur de cible » selon les options données.
 
-Donc 3 theme au choix: 
-
-Ville/village intelligent: gestion des transports, signalement des incidents, informations locales,
-réservation de services publics, etc.
+Theme
 
 Bâtiment:gestion d’accès, informations locales,
 consommation d’énergie, consommation d’eau, gestion de pièces/salles, etc.
 
-Etablissement: gestion d’accès, actualités, le menu de la semaine, consommation d’énergie,
-consommation d’eau, gestion de pièces/salles, etc.
 
 4 Module:
 
@@ -25,4 +20,3 @@ Administration 8-9
 
 Framework:
 Vue.js
-....... si vous voulez
