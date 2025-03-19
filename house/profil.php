@@ -85,27 +85,6 @@
 
 <!-- Zone pour afficher le message -->
 <div id="result"></div>
-
-<script>
-document.getElementById("profilForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Empêcher le rechargement de la page
-
-    var formData = new FormData(this);
-    formData.append("ok2", "1");
-
-    fetch("traitement.php", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById("result").innerHTML = data; // Affiche la réponse
-        document.getElementById("profilForm").reset(); // Réinitialise le formulaire après soumission
-    })
-    .catch(error => console.error("Erreur :", error));
-});
-</script>
-
 </body>
 </html>
 
@@ -127,6 +106,5 @@ $id = $_SESSION['user_id'];
 $requete = $bdd->prepare("SELECT * FROM users WHERE id = ?");
 $requete->execute([$id]);
 $user = $requete->fetch();
-
 
 ?>
