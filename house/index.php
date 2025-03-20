@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'Accueil</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <style>
         /* Styles globaux pour la page d'accueil */
         body {
@@ -31,6 +32,12 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 500px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .content h1 {
@@ -48,23 +55,53 @@
             cursor: pointer;
             text-decoration: none;
             transition: background-color 0.3s;
+            margin: 10px;
         }
 
         .btn:hover {
             background-color: #0056b3;
         }
+
+        .message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+
+    <div id="app" class="container">
         <div class="content">
-            <h1>Bienvenue à la Maison des Bon</h1>
-            <p>Nous sommes ravis de vous accueillir. Pour accéder à l'espace membre, veuillez vous inscrire.</p>
-            <a href="login.php" class="btn">Se connecter</a> <!-- Bouton qui redirige vers la page de connexion -->
-            <a href="inscription.php" class="btn">S'inscrire</a><!-- Bouton qui redirige vers la page d'inscription -->
-</body>
-</html>
+            <h1>{{ welcomeMessage }}</h1>
+            <p>{{ description }}</p>
+            <a href="login.php" class="btn">{{ loginText }}</a>
+            <a href="inscription.php" class="btn">{{ signupText }}</a>
+
+            <div class="message" v-if="showMessage">
+                <p>Nous sommes heureux de vous avoir parmi nous!</p>
+            </div>
         </div>
     </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                welcomeMessage: 'Bienvenue à la Maison des Bon',
+                description: 'Nous sommes ravis de vous accueillir. Pour accéder à l\'espace membre, veuillez vous inscrire.',
+                loginText: 'Se connecter',
+                signupText: 'S\'inscrire',
+                showMessage: false
+            },
+            mounted() {
+                this.showMessage = true;
+                setTimeout(() => {
+                    this.showMessage = false;
+                }, 5000); // Message disparaît après 5 secondes
+            }
+        });
+    </script>
+
 </body>
 </html>
