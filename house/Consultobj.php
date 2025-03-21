@@ -78,12 +78,17 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-<a href="profil.php">Modifier mon profil</a>
+
+<div style="text-align: right;">
+<a href="profil.php" class="text-2xl font-bold mb-4">Modifier mon profil</a>
+</div>
+
+
 <div id="app" class="p-6">
-    <h2 class="text-2xl font-bold mb-4">Liste des Objets</h2>
+    <center><h2 class="text-2xl font-bold mb-4">Liste des Objets</h2></center>
     <div class="grid grid-cols-3 gap-4">
         <div v-for="objet in objets" :key="objet.id" class="border p-4 rounded-lg shadow-md">
-            <img :src="objet.image_url" :alt="objet.nom" class="w-full h-32 object-cover rounded-md">
+            <img :src="objet.image_url" :alt="objet.nom" >
             <h3 class="text-lg font-semibold mt-2">{{ objet.nom }}</h3>
             <p class="text-gray-600">Type: {{ objet.type }}</p>
             <p class="font-bold" :class="{'text-green-600': objet.etat === 'allumé', 'text-red-600': objet.etat === 'éteint'}">État: {{ objet.etat }}</p>
