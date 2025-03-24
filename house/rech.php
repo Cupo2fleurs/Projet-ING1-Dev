@@ -74,27 +74,24 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Consultation des Objets</title>
+
+
+    
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 
 <div style="text-align: right;">
-    <a href="profil.php" class="text-2xl font-bold mb-4">Modifier mon profil</a>
-</div>
-<div style="text-align: center; padding-left: 20px;">
-    <a href="Objadmin.php" class="text-xl font-bold text-blue-500 hover:underline">Modifier Objet</a>
+<a href="profil.php" class="text-2xl font-bold mb-4">Modifier mon profil</a>
 </div>
 
+
 <div id="app" class="p-6">
-    <center>
-        <h2 class="text-2xl font-bold mb-4">Liste des Objets</h2>
-        <input type="text" v-model="search" placeholder="Rechercher un objet..." class="border p-2 rounded w-1/2">
-    </center>
-    
-    <div class="grid grid-cols-3 gap-4 mt-4">
-        <div v-for="objet in filteredObjets" :key="objet.id" class="border p-4 rounded-lg shadow-md">
-            <img :src="objet.image_url" :alt="objet.nom">
+    <center><h2 class="text-2xl font-bold mb-4">Liste des Objets</h2></center>
+    <div class="grid grid-cols-3 gap-4">
+        <div v-for="objet in objets" :key="objet.id" class="border p-4 rounded-lg shadow-md">
+            <img :src="objet.image_url" :alt="objet.nom" >
             <h3 class="text-lg font-semibold mt-2">{{ objet.nom }}</h3>
             <p class="text-gray-600">Type: {{ objet.type }}</p>
             <p class="font-bold" :class="{'text-green-600': objet.etat === 'allumé', 'text-red-600': objet.etat === 'éteint'}">État: {{ objet.etat }}</p>
@@ -132,19 +129,8 @@ const { createApp } = Vue;
 createApp({
     data() {
         return {
-            search: '',
             objets: <?php echo json_encode($objets); ?>
         };
-    },
-    computed: {
-        filteredObjets() {
-            return this.objets.filter(objet => {
-                const searchLower = this.search.toLowerCase();
-                return Object.values(objet).some(value => 
-                    value && value.toString().toLowerCase().includes(searchLower)
-                );
-            });
-        }
     }
 }).mount('#app');
 </script>
