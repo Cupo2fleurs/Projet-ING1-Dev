@@ -82,6 +82,9 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div style="text-align: right;">
 <a href="profil.php" class="text-2xl font-bold mb-4">Modifier mon profil</a>
 </div>
+<div style="text-align: left;">
+<a href="liste_profil.php" class="text-2xl font-bold mb-4">Liste des profils</a>
+</div>
 
 
 <div id="app" class="p-6">
