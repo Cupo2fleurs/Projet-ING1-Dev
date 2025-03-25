@@ -20,8 +20,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $_POST['nom'];
     $type = $_POST['type'];
     $etat = $_POST['etat'];
-    $image_url = $_POST['image_url'];
     
+    $image_url = ''; // Initialisation du chemin de l'image
+
+    // Vérification et traitement de l'upload d'image
+    if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
+        $upload_dir = 'uploads/';
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true); // Création du dossier si nécessaire
+        }
+
+        $file_name = basename($_FILES['photo']['name']);
+        $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
+        $new_file_name = uniqid('img_') . '.' . $file_ext; // Génération d'un nom unique
+        $file_path = $upload_dir . $new_file_name;
+
+        if (move_uploaded_file($_FILES['photo']['tmp_name'], $file_path)) {
+            $image_url = $file_path; // Stocke le chemin de l'image
+        } else {
+            die("Erreur lors de l'upload de l'image.");
+        }
+    }
+
     // Champs spécifiques selon le type d'objet
     $temperature = $_POST['temperature'] ?? null;
     $programme = $_POST['programme'] ?? null;
@@ -31,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $chaine = $_POST['chaine'] ?? null;
     $volume = $_POST['volume'] ?? null;
 
+    // Insertion des données dans la base
     $sql = "INSERT INTO objets (nom, type, etat, image_url, temperature, programme, duree, mode, position, chaine, volume)
             VALUES (:nom, :type, :etat, :image_url, :temperature, :programme, :duree, :mode, :position, :chaine, :volume)";
     
@@ -39,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'nom' => $nom,
         'type' => $type,
         'etat' => $etat,
-        'image_url' => $image_url,
+        'image_url' => $image_url, // Chemin stocké en base de données
         'temperature' => $temperature,
         'programme' => $programme,
         'duree' => $duree,
@@ -48,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'chaine' => $chaine,
         'volume' => $volume
     ]);
-    
+
     header("Location: Objadmin.php");
     exit();
 }
@@ -69,9 +90,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2 class="text-2xl font-bold mb-4">Créer un Nouvel Objet</h2>
 
     <div id="app">
-        <form method="post" class="space-y-4">
+        <form method="post" enctype="multipart/form-data" class="space-y-4">
             <label>Nom: <input type="text" name="nom" required class="border p-2 rounded w-full"></label>
-            <label>Image: <input type="file" name="photo" accept="image/*">
+            <label>Image: <input type="file" name="photo" accept="image/*" required class="border p-2"></label><br>
             <label>Type:
                 <select name="type" v-model="selectedType" class="border p-2 rounded w-full">
                     <option value="chauffage">Chauffage</option>

@@ -45,6 +45,7 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div style="text-align: right; padding: 20px;">
     <a href="Creaobj.php" class="text-xl font-bold text-green-500 hover:underline">Créer un Objet</a>
 </div>
+<a href="Consultobj.php" class="text-blue-500 hover:underline">&#8592; Retour</a>
 
 <div id="app" class="p-6">
     <center>

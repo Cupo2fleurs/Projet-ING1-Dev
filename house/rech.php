@@ -15,112 +15,122 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Mise à jour des objets lors d'une soumission du formulaire
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['objet_id'])) {
-    $objet_id = $_POST['objet_id'];
-    $nouvel_etat = $_POST['etat'] ?? null;
-    $nouvelle_temperature = $_POST['temperature'] ?? null;
-    $nouveau_programme = $_POST['programme'] ?? null;
-    $nouvelle_duree = $_POST['duree'] ?? null;
-    $nouveau_mode = $_POST['mode'] ?? null;
-    $nouvelle_chaine = $_POST['chaine'] ?? null;
-    $nouveau_volume = $_POST['volume'] ?? null;
+// Traitement du formulaire d'ajout
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nom = $_POST['nom'];
+    $type = $_POST['type'];
+    $etat = $_POST['etat'];
+    $image_url = $_POST['image_url'];
+    
+    // Champs spécifiques selon le type d'objet
+    $temperature = $_POST['temperature'] ?? null;
+    $programme = $_POST['programme'] ?? null;
+    $duree = $_POST['duree'] ?? null;
+    $mode = $_POST['mode'] ?? null;
+    $position = $_POST['position'] ?? null;
+    $chaine = $_POST['chaine'] ?? null;
+    $volume = $_POST['volume'] ?? null;
 
-    $sql = "UPDATE objets SET etat = :etat";
-    $params = ['etat' => $nouvel_etat, 'id' => $objet_id];
-
-    if ($nouvelle_temperature !== null) {
-        $sql .= ", temperature = :temperature";
-        $params['temperature'] = $nouvelle_temperature;
-    }
-    if ($nouveau_programme !== null) {
-        $sql .= ", programme = :programme";
-        $params['programme'] = $nouveau_programme;
-    }
-    if ($nouvelle_duree !== null) {
-        $sql .= ", duree = :duree";
-        $params['duree'] = $nouvelle_duree;
-    }
-    if ($nouveau_mode !== null) {
-        $sql .= ", mode = :mode";
-        $params['mode'] = $nouveau_mode;
-    }
-    if ($nouvelle_chaine !== null) {
-        $sql .= ", chaine = :chaine";
-        $params['chaine'] = $nouvelle_chaine;
-    }
-    if ($nouveau_volume !== null) {
-        $sql .= ", volume = :volume";
-        $params['volume'] = $nouveau_volume;
-    }
-
-    $sql .= " WHERE id = :id";
+    $sql = "INSERT INTO objets (nom, type, etat, image_url, temperature, programme, duree, mode, position, chaine, volume)
+            VALUES (:nom, :type, :etat, :image_url, :temperature, :programme, :duree, :mode, :position, :chaine, :volume)";
+    
     $stmt = $bdd->prepare($sql);
-    $stmt->execute($params);
-
-    header("Location: ConsultObj.php");
+    $stmt->execute([
+        'nom' => $nom,
+        'type' => $type,
+        'etat' => $etat,
+        'image_url' => $image_url,
+        'temperature' => $temperature,
+        'programme' => $programme,
+        'duree' => $duree,
+        'mode' => $mode,
+        'position' => $position,
+        'chaine' => $chaine,
+        'volume' => $volume
+    ]);
+    
+    header("Location: Objadmin.php");
     exit();
 }
-
-// Récupération des objets
-$sql = "SELECT * FROM objets";
-$stmt = $bdd->prepare($sql);
-$stmt->execute();
-$objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Consultation des Objets</title>
-
-
-    
+    <title>Créer un Objet</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 
-<div style="text-align: right;">
-<a href="profil.php" class="text-2xl font-bold mb-4">Modifier mon profil</a>
-</div>
+<div class="p-6">
+    <a href="Objadmin.php" class="text-blue-500 hover:underline">&#8592; Retour</a>
+    <h2 class="text-2xl font-bold mb-4">Créer un Nouvel Objet</h2>
 
-
-<div id="app" class="p-6">
-    <center><h2 class="text-2xl font-bold mb-4">Liste des Objets</h2></center>
-    <div class="grid grid-cols-3 gap-4">
-        <div v-for="objet in objets" :key="objet.id" class="border p-4 rounded-lg shadow-md">
-            <img :src="objet.image_url" :alt="objet.nom" >
-            <h3 class="text-lg font-semibold mt-2">{{ objet.nom }}</h3>
-            <p class="text-gray-600">Type: {{ objet.type }}</p>
-            <p class="font-bold" :class="{'text-green-600': objet.etat === 'allumé', 'text-red-600': objet.etat === 'éteint'}">État: {{ objet.etat }}</p>
-            
-            <form method="post" class="mt-2">
-                <input type="hidden" name="objet_id" :value="objet.id">
-                
-                <label class="block text-sm font-medium">État:</label>
-                <select name="etat" class="border p-1 rounded w-full">
+    <div id="app">
+        <form method="post" class="space-y-4">
+            <label>Nom: <input type="text" name="nom" required class="border p-2 rounded w-full"></label>
+            <label>Image: <input type="file" name="photo" accept="image/*"></label><br>
+            <label>Type:
+                <select name="type" v-model="selectedType" class="border p-2 rounded w-full">
+                    <option value="chauffage">Chauffage</option>
+                    <option value="machine_laver">Machine à laver</option>
+                    <option value="four">Four</option>
+                    <option value="rideaux">Rideaux</option>
+                    <option value="lave_vaisselle">Lave-vaisselle</option>
+                    <option value="television">Télévision</option>
+                </select>
+            </label>
+            <label>État:
+                <select name="etat" class="border p-2 rounded w-full">
                     <option value="allumé">Allumé</option>
                     <option value="éteint">Éteint</option>
                     <option value="en_cours">En cours</option>
+                    <option value="fermé">Fermé</option>
+                    <option value="ouvert">Ouvert</option>
                 </select>
-                
-                <div v-if="objet.type === 'chauffage'">
-                    <label class="block text-sm font-medium">Température:</label>
-                    <input type="number" name="temperature" :value="objet.temperature" class="border p-1 rounded w-full">
-                </div>
-                
-                <div v-if="objet.type === 'television'">
-                    <label class="block text-sm font-medium">Chaîne:</label>
-                    <input type="text" name="chaine" :value="objet.chaine" class="border p-1 rounded w-full">
-                    <label class="block text-sm font-medium">Volume:</label>
-                    <input type="number" name="volume" :value="objet.volume" class="border p-1 rounded w-full">
-                </div>
-                
-                <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Mettre à jour</button>
-            </form>
-        </div>
+            </label>
+            
+            <div v-if="selectedType === 'chauffage'">
+                <label>Température: <input type="number" name="temperature" class="border p-2 rounded w-full"></label>
+            </div>
+            <div v-if="selectedType === 'machine_laver' || selectedType === 'lave_vaisselle'">
+                <label>Programme:
+                    <select name="programme" class="border p-2 rounded w-full">
+                        <option value="Normal">Normal</option>
+                        <option value="Intensif">Intensif</option>
+                        <option value="Éco">Éco</option>
+                        <option value="Rapide">Rapide</option>
+                    </select>
+                </label>
+                <label>Durée: <input type="number" name="duree" class="border p-2 rounded w-full"></label>
+            </div>
+            <div v-if="selectedType === 'four'">
+                <label>Mode:
+                    <select name="mode" class="border p-2 rounded w-full">
+                        <option value="Convection">Convection</option>
+                        <option value="Grill">Grill</option>
+                        <option value="Chaleur tournante">Chaleur tournante</option>
+                    </select>
+                </label>
+                <label>Durée: <input type="number" name="duree" class="border p-2 rounded w-full"></label>
+            </div>
+            <div v-if="selectedType === 'rideaux'">
+                <label>Position:
+                    <select name="position" class="border p-2 rounded w-full">
+                        <option value="ouvert">Ouvert</option>
+                        <option value="fermé">Fermé</option>
+                    </select>
+                </label>
+            </div>
+            <div v-if="selectedType === 'television'">
+                <label>Chaîne: <input type="text" name="chaine" class="border p-2 rounded w-full"></label>
+                <label>Volume: <input type="number" name="volume" class="border p-2 rounded w-full"></label>
+            </div>
+
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Créer</button>
+        </form>
     </div>
 </div>
 
@@ -129,10 +139,11 @@ const { createApp } = Vue;
 createApp({
     data() {
         return {
-            objets: <?php echo json_encode($objets); ?>
+            selectedType: ''
         };
     }
 }).mount('#app');
 </script>
+
 </body>
 </html>
