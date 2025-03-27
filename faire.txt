@@ -1,0 +1,25 @@
+
+Faire barre de recherche profil
+
+Afficher son profil
+
+Ajouter modif niveau dans profil
+Refaire CSS profil.php
+
+
+Faire page modification de freetour IMPORTANT
+notif admin si url=image pas affichés
+
+
+Ameliorer BDD objet
+Corriger bug rideaux allumé
+
+
+CSS au propre pour chaque page ( alignement,Couleur, taille texte)
+
+Faire un acces à free tour et une verification si connecté ou non pour faciliter la redirection
+
+Faire un systeme de validation de l'inscription par l'admin
+
+Modifier ( Uniformiser ) le nom des fichier.php car pas logique pas beau ( tres moche )
+Faire le diagramme du site ( Apres avoir modifier le nom des fichier.php)
