@@ -86,10 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <div class="p-6">
-    <a href="Objadmin.php" class="text-blue-500 hover:underline">&#8592; Retour</a>
+    <a href="Objadmin.php" class="text-2xl font-bold text-blue-500 mb-4">&#8592; Retour</a>
     <h2 class="text-2xl font-bold mb-4">Créer un Nouvel Objet</h2>
-
-    <div id="app">
+ <div id="app">
         <form method="post" enctype="multipart/form-data" class="space-y-4">
             <label>Nom: <input type="text" name="nom" required class="border p-2 rounded w-full"></label>
             <label>Image: <input type="file" name="photo" accept="image/*" required class="border p-2"></label><br>

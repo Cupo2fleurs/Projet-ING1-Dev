@@ -6,24 +6,26 @@
     <title>Page d'Accueil</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <style>
-        /* Styles globaux pour la page d'accueil */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7fa;
+            font-family: 'Poppins', sans-serif;
+            background: url('uploads/maison.jpg') no-repeat center center/cover;
             margin: 0;
             padding: 0;
-        }
-
-        /* Conteneur principal pour centrer le contenu */
-        .container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
-            background-color: #e1e8ed;
         }
 
-        /* Style du contenu principal (accueil) */
+        .container {
+            text-align: center;
+            padding: 40px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            margin-top: 15vh;
+        }
+
         .content {
             text-align: center;
             background-color: #ffffff;
@@ -62,10 +64,22 @@
             background-color: #0056b3;
         }
 
-        .message {
-            margin-top: 20px;
+        .free-tour {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
             font-size: 1.2rem;
-            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .free-tour:hover {
+            background-color: #218838;
+            
         }
     </style>
 </head>
@@ -77,12 +91,10 @@
             <p>{{ description }}</p>
             <a href="login.php" class="btn">{{ loginText }}</a>
             <a href="inscription.php" class="btn">{{ signupText }}</a>
-
-            <div class="message" v-if="showMessage">
-                <p>Nous sommes heureux de vous avoir parmi nous!</p>
-            </div>
         </div>
     </div>
+    
+    <a href="freetour.php" class="free-tour">FREE TOUR</a>
 
     <script>
         new Vue({
@@ -97,8 +109,8 @@
             mounted() {
                 this.showMessage = true;
                 setTimeout(() => {
-                    this.showMessage = false;
-                }, 5000); // Message disparaît après 5 secondes
+                    this.showMessage = false;  // <---------- Corriger le timer inutile 
+                }, 5000);
             }
         });
     </script>

@@ -78,14 +78,17 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">  
 <div style="text-align: right;">
     <a href="profil.php" class="text-2xl font-bold mb-4">Modifier mon profil</a>
 </div>
 <div style="text-align: center; padding-left: 20px;">
     <a href="Objadmin.php" class="text-xl font-bold text-blue-500 hover:underline">Modifier Objet</a>
 </div>
-
+<div style="text-align: left;">
+<a href="liste_profil.php" class="text-2xl font-bold mb-4">Liste des profils</a>
+</div>
+</div>
 <div id="app" class="p-6">
     <center>
         <h2 class="text-2xl font-bold mb-4">Liste des Objets</h2>

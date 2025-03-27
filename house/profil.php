@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <title> profil </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <style>
@@ -40,6 +42,7 @@
   }
         
     </style>
+    <a href="Consultobj.php" class="text-2xl font-bold text-blue-500 mb-4">&#8592; Retour</a>
 <h1>Mon Profil</h1>
 <form id="profilForm" method="POST" action="traitement.php" enctype="multipart/form-data">
     <div class="rest">
