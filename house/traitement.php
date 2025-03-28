@@ -8,56 +8,47 @@ try {
     die("Erreur : " . $ex->getMessage());
 }
 
-// Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
     echo "<p style='color:red;'>Vous devez être connecté pour modifier votre profil.</p>";
     exit();
 }
 
-// Vérifier si le formulaire a été soumis
-if (isset($_POST['ok2'])) {
-    $id = $_SESSION['user_id'];
-    $pseudo = htmlspecialchars($_POST['pseudo']);
-    $born = htmlspecialchars($_POST['born']);
-    $sexe = htmlspecialchars($_POST['sexe']);
-    $age = intval($_POST['age']);
-    $grade = htmlspecialchars($_POST['grade']);
-    
-    // Vérifier si une photo a été uploadée
-    $photo = null;
-    if (!empty($_FILES['photo']['name'])) {
-        $dossier = 'uploads/';
-        $nom_fichier = basename($_FILES['photo']['name']);
-        $chemin_fichier = $dossier . $nom_fichier;
+// Récupérer l'id de l'utilisateur connecté
+$id = $_SESSION['user_id'];
 
-        if (move_uploaded_file($_FILES['photo']['tmp_name'], $chemin_fichier)) {
-            $photo = $chemin_fichier;
-        } else {
-            echo "<p style='color:red;'>Erreur lors de l'upload de l'image.</p>";
-            exit();
-        }
-    }
+// Vérification si le formulaire a été soumis
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupérer les données du formulaire
+    $pseudo = $_POST['pseudo'];
+    $age = $_POST['age'];
+    $sexe = $_POST['sexe'];
+    $born = $_POST['born'];
+    $grade = $_POST['grade'];
 
-    // Construire la requête SQL dynamiquement
-    $sql = "UPDATE users SET pseudo = ?, age = ?, sexe = ?, born = ?, grade = ?";
-    $params = [$pseudo, $age, $sexe, $born, $grade];
-
-    if ($photo) {
-        $sql .= ", photo = ?";
-        $params[] = $photo;
-    }
-
-    $sql .= " WHERE id = ?";
-    $params[] = $id;
-
-    // Exécuter la mise à jour
-    $requete = $bdd->prepare($sql);
-    if ($requete->execute($params)) {
-        echo '<script>location.href="Consultobj.php";</script>';
+    // Gérer l'upload de la photo
+    if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
+        $photo_path = 'uploads/' . $_FILES['photo']['name'];
+        move_uploaded_file($_FILES['photo']['tmp_name'], $photo_path);
     } else {
-        echo "<p style='color:red;'>Erreur lors de la mise à jour.</p>";
+        $photo_path = null;
     }
-} else {
-    echo "<p style='color:red;'>Tous les champs sont obligatoires !</p>";
+
+    // Mise à jour des informations de l'utilisateur
+    $requete = $bdd->prepare("UPDATE users SET pseudo = ?, age = ?, sexe = ?, born = ?, grade = ?, photo = ? WHERE id = ?");
+    $requete->execute([$pseudo, $age, $sexe, $born, $grade, $photo_path, $id]);
+
+    // Ajouter 1 point à l'utilisateur pour avoir modifié son profil
+    $stmt = $bdd->prepare("SELECT points FROM users WHERE id = :id");
+    $stmt->execute(['id' => $id]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $new_points = $user['points'] + 1;
+
+    // Mise à jour des points dans la base de données
+    $stmt = $bdd->prepare("UPDATE users SET points = :points WHERE id = :id");
+    $stmt->execute(['points' => $new_points, 'id' => $id]);
+
+    // Redirection vers la page de consultation des objets après modification
+    header("Location: ConsultObj.php");
+    exit();
 }
 ?>

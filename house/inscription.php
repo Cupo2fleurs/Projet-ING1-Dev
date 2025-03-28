@@ -34,8 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Requête SQL pour insérer les données dans la base de données
-    $sql = "INSERT INTO users (nom, prenom, mdp, pseudo, age, sexe, grade, born, photo)
-            VALUES ('$nom', '$prenom', '$mdp', '$pseudo', '$age', '$sexe', '$grade', '$born', '$photoPath')";
+    $sql = "INSERT INTO users (nom, prenom, mdp, pseudo, age, sexe, grade, born, photo, points)
+            VALUES ('$nom', '$prenom', '$mdp', '$pseudo', '$age', '$sexe', '$grade', '$born', '$photoPath',1)";
 
     if ($conn->query($sql) === TRUE) {
         // Redirection vers la page redirection après l'inscription réussie
@@ -58,9 +58,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Inscription</title>
 </head>
 <body>
+
+<style>
+     #profilForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    }
+
+    .rest input{
+        width: 100%;
+        max-width: 300px; 
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .rest label{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+    }
+
+    h1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .gpsexe {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacement entre les éléments */
+  }
+</style>
     <h1>Inscription</h1>
 
-    <form method="POST" action="inscription.php" enctype="multipart/form-data">
+    <form id="profilForm" method="POST" action="inscription.php" enctype="multipart/form-data">
+    <div class="rest">
         <label for="nom">Nom :</label><br>
         <input type="text" id="nom" name="nom" required><br><br>
 
@@ -75,14 +112,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="age">Âge :</label><br>
         <input type="number" id="age" name="age" min="1" max="150" required><br><br>
-
+        </div>
+        <div class="gpsexe">
         <label for="sexe">Sexe :</label><br>
         <select id="sexe" name="sexe" required>
             <option value="Homme">Homme</option>
             <option value="Femme">Femme</option>
             <option value="Autre">Autre</option>
         </select><br><br>
-
+</div>
+<div class="rest">
         <label for="grade">Grade :</label><br>
         <input type="text" id="grade" name="grade" value="Visiteur" readonly><br><br> <!-- Le grade est fixe à "Visiteur" -->
 
@@ -93,6 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="file" id="photo" name="photo" accept="image/*" required><br><br> <!-- Champ pour télécharger une image -->
 
         <input type="submit" value="S'inscrire">
+</div>
     </form>
 </body>
 </html>

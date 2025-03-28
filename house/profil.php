@@ -40,6 +40,7 @@
   }
         
     </style>
+    <a href="Consultobj.php" class="text-blue-500 hover:underline">&#8592; Retour</a>
 <h1>Mon Profil</h1>
 <form id="profilForm" method="POST" action="traitement.php" enctype="multipart/form-data">
     <div class="rest">
@@ -79,7 +80,7 @@
         <input type="file" id="photo" name="photo" accept="image/*">
         <br />
         <br>
-        <input type="submit" value="Valider" name="ok2">
+        <input type="submit" value="Valider (+1pt)" name="ok2">
     </div>
 </form>
 

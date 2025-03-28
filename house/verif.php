@@ -36,7 +36,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
             // Si la photo est vide, on met une image par défaut
             if (empty($user['photo'])) {
-                $photo = 'default.jpg';
+                $photo = 'uploads/default.jpg';
                 $updatePhoto = $bdd->prepare("UPDATE users SET photo = :photo WHERE id = :id");
                 $updatePhoto->execute(['photo' => $photo, 'id' => $user['id']]);
             } else {

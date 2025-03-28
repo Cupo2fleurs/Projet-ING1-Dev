@@ -40,10 +40,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 -- Déchargement des données de la table `users`
 --
-
+-- 1 par défaut lors de l'inscription
 INSERT INTO `users` (`id`, `nom`, `prenom`, `mdp`, `pseudo`, `age`, `sexe`, `grade`, `born`, `photo`, `points`) VALUES
-(1, 'Bon', 'Jean', '1234', 'Vache', 78, 'Homme', 'Père', '1111-11-11', 'default.jpg', 0),  
-(2, 'Bon', 'Bella', 'bonbon', 'BonB', 0, '', '', '0000-00-00', 'default.jpg', 0),
-(3, 'Bon', 'Otis', 'coucou', 'Vache', 15, 'Homme', 'Père', '1111-11-11', 'uploads/0A139E92-5133-4D4C-B26B-495E42D6FC94.jpg', 0);
+(1, 'Bon', 'Jean', '1234', 'Vache', 78, 'Homme', 'Père', '1111-11-11', 'default.jpg', 1),  
+(2, 'Bon', 'Bella', 'bonbon', 'BonB', 0, '', '', '0000-00-00', 'default.jpg', 1),
+(3, 'Bon', 'Otis', 'coucou', 'Vache', 15, 'Homme', 'Père', '1111-11-11', 'uploads/0A139E92-5133-4D4C-B26B-495E42D6FC94.jpg', 1);
 
 COMMIT;
