@@ -23,3 +23,5 @@ Faire un systeme de validation de l'inscription par l'admin
 
 Modifier ( Uniformiser ) le nom des fichier.php car pas logique pas beau ( tres moche )
 Faire le diagramme du site ( Apres avoir modifier le nom des fichier.php)
+
+ENCORE + IMPORTANT QUE TOUT AU DESSUS : FAIRE LE SYSTEME DES POINTS
