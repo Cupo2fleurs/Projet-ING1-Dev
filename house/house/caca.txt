@@ -1,12 +1,5 @@
 
-<?php
-session_start();
-$isConnected = isset($_SESSION['user_id']);
-if ($isConnected):
-    session_destroy();
-    exit();
-endif; 
-?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -33,7 +26,6 @@ endif;
             width: 90%;
             max-width: 500px;
             margin-top: 15vh;
-            margin-right: 60px
         }
 
         .content {
@@ -126,4 +118,4 @@ endif;
     </script>
 
 </body>
-</html>
+</html> Voici ma page d'accueil j'aimerais que lorsque j'arrive sur cette page je sois deconnecté de la session

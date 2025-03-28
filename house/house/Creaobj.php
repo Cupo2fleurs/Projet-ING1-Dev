@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <div class="p-6">
-    <a href="Objadmin.php" class="text-blue-500 hover:underline">&#8592; Retour</a>
+    <a href="Objadmin.php" class="text-2xl font-bold text-blue-500 mb-4">&#8592; Retour</a>
     <h2 class="text-2xl font-bold mb-4">Créer un Nouvel Objet</h2>
  <div id="app">
         <form method="post" enctype="multipart/form-data" class="space-y-4">

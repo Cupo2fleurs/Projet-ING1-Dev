@@ -96,7 +96,7 @@
     </div>
 
     <div class="footer">
-        <p>&copy; 2025 MonSite - Tous droits réservés</p>
+        <p>&copy; 2025 Bon-Home - Tous droits réservés</p>
     </div>
 
     <script>

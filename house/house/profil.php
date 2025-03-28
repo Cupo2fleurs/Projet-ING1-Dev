@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
     <title> profil </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <style>
+
+body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+        }
         #profilForm{
     display: flex;
     flex-direction: column;
@@ -31,6 +40,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        font-size:35px;
         gap: 10px;
     }
     .gpsexe {
@@ -40,8 +50,8 @@
   }
         
     </style>
-    <a href="Consultobj.php" class="text-blue-500 hover:underline">&#8592; Retour</a>
-<h1>Mon Profil</h1>
+    <a href="Consultobj.php" class="text-2xl font-bold text-blue-500 mb-4  hover:underline">&#8592; Retour</a>
+    <h1>Mon Profil</h1>
 <form id="profilForm" method="POST" action="traitement.php" enctype="multipart/form-data">
     <div class="rest">
         <label>Pseudonyme</label>
@@ -83,9 +93,6 @@
         <input type="submit" value="Valider" name="ok2">
     </div>
 </form>
-
-<!-- Zone pour afficher le message -->
-<div id="result"></div>
 </body>
 </html>
 

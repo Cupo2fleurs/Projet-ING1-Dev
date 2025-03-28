@@ -20,7 +20,7 @@ if(isset($_POST['ok'])){
 // Vérifier si l'utilisateur existe dans la BDD
 $sql = "SELECT * FROM users WHERE nom = :nom AND prenom = :prenom";
 $stmt = $bdd->prepare($sql);
-$stmt->execute(['nom' => $nom, 'prenom' => $prenom]); 
+$stmt->execute(['nom' => $nom, 'prenom' => $prenom]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Vérification du mot de passe hashé
@@ -34,14 +34,6 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 $pseudo = $user['pseudo'];
             }
     
-            // Si la photo est vide, on met une image par défaut
-            if (empty($user['photo'])) {
-                $photo = 'uploads/default.jpg';
-                $updatePhoto = $bdd->prepare("UPDATE users SET photo = :photo WHERE id = :id");
-                $updatePhoto->execute(['photo' => $photo, 'id' => $user['id']]);
-            } else {
-                $photo = $user['photo'];
-            }
                     // Stocker les informations en session
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['nom'] = $user['nom'];

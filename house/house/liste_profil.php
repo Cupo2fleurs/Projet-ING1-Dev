@@ -10,7 +10,7 @@ try {
 }
 
 // Récupération des utilisateurs
-$sql = "SELECT pseudo, age, sexe, born, grade,born, photo FROM users";
+$sql = "SELECT pseudo, age, sexe, grade, photo FROM users";
 $stmt = $bdd->prepare($sql);
 $stmt->execute();
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -20,50 +20,124 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Profils</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .top-links {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            text-align: left;
+            transition: transform 0.2s;
+        }
+
+        .profile-card:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-card img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 p-6">
-
-<div class="flex justify-end">
-    <a href="profil.php" class="text-2xl font-bold mb-4 text-blue-600 hover:underline">Modifier mon profil</a>
-</div>
-
-<div class="flex justify-end">
-    <a href="Consultobj.php" class="text-2xl font-bold mb-4 text-blue-600 hover:underline">Consulter les objets</a>
-</div>
-
-<div id="app" class="max-w-6xl mx-auto">
-    <center><h2 class="text-3xl font-bold mb-6">Liste des Profils</h2></center>
-    
-    <div class="grid grid-cols-3 gap-6">
-        <profile-card v-for="user in users" :key="user.pseudo" :user="user"></profile-card>
+<body>
+    <div class="top-links">
+        <a href="profil.php" class="text-2xl font-bold mb-4 text-green-600 hover:underline">Modifier mon profil</a>
+        <a href="Consultobj.php" class="text-2xl font-bold mb-4 text-blue-600 hover:underline">Consulter les objets</a>
     </div>
-</div>
 
-<script>
-const { createApp } = Vue;
-
-createApp({
-    data() {
-        return {
-            users: <?php echo json_encode($users); ?>
-        };
-    }
-}).component('profile-card', {
-    props: ['user'],
-    template: `
-        <div class="border p-6 rounded-lg shadow-md bg-white transition transform hover:scale-105">
-            <img :src="user.photo" :alt="user.pseudo" class="w-32 h-32 object-cover rounded-full mx-auto">
-            <h3 class="text-lg font-semibold mt-4 text-center">@{{ user.pseudo }}</h3>
-            <p class="text-gray-600 text-center">{{ user.age }} ans - {{ user.sexe }}</p>
-            <p class="text-xs text-gray-500 text-center">Date de naissance : {{ user.born }}</p>
-            <p class="font-bold text-blue-600 text-center">{{ user.type_membre }}</p>
+    <div id="app" class="container">
+        <h1 class="text-2xl font-bold">Liste des Profils</h1>
+        <input type="text" v-model="search" placeholder="Rechercher un profil..." class="search-bar">
+        <div v-if="filteredProfiles.length" class="grid-container">
+            <div v-for="profil in filteredProfiles" :key="profil.pseudo" class="profile-card">
+                <img :src="profil.photo" :alt="profil.pseudo">
+                <div class="profile-info">
+                    <h3>@{{ profil.pseudo }}</h3>
+                    <p><strong>Âge:</strong> {{ profil.age }}</p>
+                    <p><strong>Sexe:</strong> {{ profil.sexe }}</p>
+                    <p><strong>Grade:</strong> {{ profil.grade }}</p>
+                </div>
+            </div>
         </div>
-    `
-}).mount('#app');
-</script>
+        <p v-else>Aucun profil ne correspond à votre recherche.</p>
+    </div>
 
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                search: '',
+                profiles: <?php echo json_encode($users); ?>
+            },
+            computed: {
+                filteredProfiles() {
+                    return this.profiles.filter(profil => {
+                        return Object.values(profil).some(value =>
+                            String(value).toLowerCase().includes(this.search.toLowerCase())
+                        );
+                    });
+                }
+            }
+        });
+    </script>
 </body>
 </html>

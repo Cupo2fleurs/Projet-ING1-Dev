@@ -45,6 +45,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Erreur: " . $sql . "<br>" . $conn->error;
     }
 
+    // Si la photo est vide, on met une image par défaut
+    if (empty($user['photo'])) {
+        $photo = 'uploads/default.jpg';
+        $updatePhoto = $bdd->prepare("UPDATE users SET photo = :photo WHERE id = :id");
+        $updatePhoto->execute(['photo' => $photo, 'id' => $user['id']]);
+    } else {
+        $photo = $user['photo'];
+    }
+
     // Fermer la connexion
     $conn->close();
 }
@@ -56,10 +65,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 
 <style>
+    body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+        }
      #profilForm{
     display: flex;
     flex-direction: column;
@@ -87,6 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         flex-direction: column;
         align-items: center;
         gap: 10px;
+        font-size:35px;
     }
     .gpsexe {
     display: flex;
@@ -94,6 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     gap: 10px; /* Espacement entre les éléments */
   }
 </style>
+    <a href="index.php" class="text-2xl font-bold text-blue-500 mb-4  hover:underline">&#8592; Retour</a>
     <h1>Inscription</h1>
 
     <form id="profilForm" method="POST" action="inscription.php" enctype="multipart/form-data">

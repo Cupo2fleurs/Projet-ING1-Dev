@@ -41,12 +41,14 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">  
 <div style="text-align: right; padding: 20px;">
+<a href="Consultobj.php" class="text-2xl font-bold text-blue-500 mb-4">&#8592; Retour</a>
+</div>
+<div style="text-align: left; padding: 20px;">
     <a href="Creaobj.php" class="text-xl font-bold text-green-500 hover:underline">Créer un Objet</a>
 </div>
-<a href="Consultobj.php" class="text-blue-500 hover:underline">&#8592; Retour</a>
-
+</div>
 <div id="app" class="p-6">
     <center>
         <h2 class="text-2xl font-bold mb-4">Gestion des Objets</h2>

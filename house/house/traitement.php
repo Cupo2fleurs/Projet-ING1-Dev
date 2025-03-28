@@ -2,11 +2,21 @@
 session_start();
 
 try {
-    $pdo_option = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-    $bdd = new PDO('mysql:host=localhost;dbname=utilisateur', 'root', '', $pdo_option);
-} catch (Exception $ex) {
-    die("Erreur : " . $ex->getMessage());
+    $bdd_users = new PDO('mysql:host=localhost;dbname=users;charset=utf8', 'root', '', [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
+    $bdd_objets = new PDO('mysql:host=localhost;dbname=objets;charset=utf8', 'root', '', [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage());
 }
+
+// Récupération des utilisateurs et objets
+$users = $bdd_users->query("SELECT * FROM users")->fetchAll(PDO::FETCH_ASSOC);
+$objets = $bdd_objets->query("SELECT * FROM objets")->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
@@ -22,6 +32,19 @@ if (isset($_POST['ok2'])) {
     $sexe = htmlspecialchars($_POST['sexe']);
     $age = intval($_POST['age']);
     $grade = htmlspecialchars($_POST['grade']);
+
+        // Récupérer l'ancienne photo
+    $sql = "SELECT photo FROM users WHERE id = ?";
+    $requete = $bdd->prepare($sql);
+    $requete->execute([$id]);
+    $ancienProfil = $requete->fetch(PDO::FETCH_ASSOC);
+
+    // Supprimer l'ancienne photo si elle existe et que ce n'est pas l'image par défaut
+    if ($ancienProfil && !empty($ancienProfil['photo']) && file_exists($ancienProfil['photo']) && $ancienProfil['photo'] !== 'uploads/default.jpg') {
+        unlink($ancienProfil['photo']); // Supprime l'ancienne photo, sauf si c'est l'image par défaut
+    }
+    
+
     
     // Vérifier si une photo a été uploadée
     $photo = null;
@@ -37,6 +60,8 @@ if (isset($_POST['ok2'])) {
             exit();
         }
     }
+
+    
 
     // Construire la requête SQL dynamiquement
     $sql = "UPDATE users SET pseudo = ?, age = ?, sexe = ?, born = ?, grade = ?";
