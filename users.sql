@@ -11,12 +11,6 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Base de données : `utilisateur`
 --
@@ -39,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `grade` varchar(30) NOT NULL,
   `born` date NOT NULL,
   `photo` text NOT NULL,
+  `points` int NOT NULL DEFAULT 0,  -- Nouvelle colonne pour les points
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -46,12 +41,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `nom`, `prenom`, `mdp`, `pseudo`, `age`, `sexe`, `grade`, `born`, `photo`) VALUES
-(1, 'Bon', 'Jean', '1234', 'Vache', 78, 'Homme', 'Père', '1111-11-11', 'default.jpg'),
-(2, 'Bon', 'Bella', 'bonbon', 'BonB', 0, '', '', '0000-00-00', 'default.jpg'),
-(3, 'Bon', 'Otis', 'coucou', 'Vache', 15, 'Homme', 'Père', '1111-11-11', 'uploads/0A139E92-5133-4D4C-B26B-495E42D6FC94.jpg');
-COMMIT;
+INSERT INTO `users` (`id`, `nom`, `prenom`, `mdp`, `pseudo`, `age`, `sexe`, `grade`, `born`, `photo`, `points`) VALUES
+(1, 'Bon', 'Jean', '1234', 'Vache', 78, 'Homme', 'Père', '1111-11-11', 'default.jpg', 0),  
+(2, 'Bon', 'Bella', 'bonbon', 'BonB', 0, '', '', '0000-00-00', 'default.jpg', 0),
+(3, 'Bon', 'Otis', 'coucou', 'Vache', 15, 'Homme', 'Père', '1111-11-11', 'uploads/0A139E92-5133-4D4C-B26B-495E42D6FC94.jpg', 0);
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+COMMIT;
