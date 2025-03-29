@@ -1,0 +1,29 @@
+
+Afficher son profil
+
+Ajouter modif niveau dans profil
+
+Ameliorer BDD objet +de modification pour les objet
+Corriger bug rideaux allumé
+
+
+CSS au propre pour chaque page ( alignement,Couleur, taille texte)
+
+Faire un systeme de validation de l'inscription par l'admin
+
+Modifier ( Uniformiser ) le nom des fichier.php car pas logique pas beau ( tres moche )
+Faire le diagramme du site ( Apres avoir modifier le nom des fichier.php)
+
+Free tour à faire au propre
+
+Module Administration
+
+
+
+
+CSS:
+Consultobj
+index 
+login 
+inscription
+profil
