@@ -28,6 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['objet_id']) && isset(
     $points++;
     $stmt = $bdd->prepare("UPDATE users SET points = :points WHERE id = :user_id");
     $stmt->execute(['points' => $points, 'user_id' => $user_id]);
+
+     // Enregistrer l'utilisation
+     $sql = "INSERT INTO utilisations (user_id, objet_id) VALUES (:user_id, :objet_id)";
+     $stmt = $bdd->prepare($sql);
+     $stmt->execute(['user_id' => $user_id, 'objet_id' => $_POST['objet_id']]);
+
 }
 
 // Mise à jour des points et des objets si l'utilisateur a 3 points ou plus
@@ -35,6 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['objet_id']) && isset(
     $points++; // Ajout de 1 point pour la modification des détails
     $stmt = $bdd->prepare("UPDATE users SET points = :points WHERE id = :user_id");
     $stmt->execute(['points' => $points, 'user_id' => $user_id]);
+
+     // Enregistrer l'utilisation
+     $sql = "INSERT INTO utilisations (user_id, objet_id) VALUES (:user_id, :objet_id)";
+     $stmt = $bdd->prepare($sql);
+     $stmt->execute(['user_id' => $user_id, 'objet_id' => $_POST['objet_id']]);
+ 
 
     $objet_id = $_POST['objet_id'];
     $nouvel_etat = $_POST['etat'] ?? null;
@@ -108,6 +120,9 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div style="text-align: center; padding-right: 50px;">
 <?php if ($points >= 5): ?>
             <a href="Objadmin.php" class="text-white text-xl font-bold hover:underline">Créer/Supprimer Objet</a></br>
+        <?php endif; ?>
+<?php if ($points >= 8): ?>
+            <a href="admin_dashboard.php" class="text-white text-xl font-bold hover:underline">Admin Dashboard</a>
         <?php endif; ?>
     <a href="freetour.php" class="text-white text-xl font-bold hover:underline">Free Tour</a>
 </div>
