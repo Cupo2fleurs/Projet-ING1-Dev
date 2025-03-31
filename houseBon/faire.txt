@@ -14,12 +14,14 @@ Faire un systeme de validation de l'inscription par l'admin
 Modifier ( Uniformiser ) le nom des fichier.php car pas logique pas beau ( tres moche )
 Faire le diagramme du site ( Apres avoir modifier le nom des fichier.php)
 
-Free tour à faire au propre
+
 
 Module Administration
 
-
-
+Ajouter date consultation objet
+Faire CSS
+Fusionner
+Free tour à faire au propre
 
 CSS:
 Consultobj

@@ -26,27 +26,33 @@ $points = $user['points'] ?? 0;
 // Mise à jour des points après consultation des détails ou modification
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['objet_id']) && isset($_POST['view_details'])) {
     $points++;
+    $objet_id = $_POST['objet_id'];
     $stmt = $bdd->prepare("UPDATE users SET points = :points WHERE id = :user_id");
     $stmt->execute(['points' => $points, 'user_id' => $user_id]);
+    // Enregistrer Consultation objet
+    $stmt = $bdd->prepare("UPDATE objets SET consult = NOW() WHERE id = :objet_id");
+    $stmt->execute(['objet_id' => $objet_id]);
 
      // Enregistrer l'utilisation
      $sql = "INSERT INTO utilisations (user_id, objet_id) VALUES (:user_id, :objet_id)";
      $stmt = $bdd->prepare($sql);
      $stmt->execute(['user_id' => $user_id, 'objet_id' => $_POST['objet_id']]);
-
 }
 
 // Mise à jour des points et des objets si l'utilisateur a 3 points ou plus
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['objet_id']) && isset($_POST['modifier_details']) && $points >= 5) {
     $points++; // Ajout de 1 point pour la modification des détails
+    $objet_id = $_POST['objet_id'];
     $stmt = $bdd->prepare("UPDATE users SET points = :points WHERE id = :user_id");
     $stmt->execute(['points' => $points, 'user_id' => $user_id]);
+    
+    $sql = "UPDATE objets SET consult = NOW()"; // On met à jour la date de consultation
+    $params = ['id' => $objet_id];
 
-     // Enregistrer l'utilisation
-     $sql = "INSERT INTO utilisations (user_id, objet_id) VALUES (:user_id, :objet_id)";
-     $stmt = $bdd->prepare($sql);
-     $stmt->execute(['user_id' => $user_id, 'objet_id' => $_POST['objet_id']]);
- 
+    // Enregistrer l'utilisation
+    $sql = "INSERT INTO utilisations (user_id, objet_id) VALUES (:user_id, :objet_id)";
+    $stmt = $bdd->prepare($sql);
+    $stmt->execute(['user_id' => $user_id, 'objet_id' => $_POST['objet_id']]);
 
     $objet_id = $_POST['objet_id'];
     $nouvel_etat = $_POST['etat'] ?? null;
@@ -121,8 +127,8 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php if ($points >= 5): ?>
             <a href="Objadmin.php" class="text-white text-xl font-bold hover:underline">Créer/Supprimer Objet</a></br>
         <?php endif; ?>
-<?php if ($points >= 8): ?>
-            <a href="admin_dashboard.php" class="text-white text-xl font-bold hover:underline">Admin Dashboard</a>
+        <?php if ($points >= 8): ?>
+            <a href="admin_dashboard.php" class="text-white text-xl font-bold hover:underline">Admin Dashboard</a></br>
         <?php endif; ?>
     <a href="freetour.php" class="text-white text-xl font-bold hover:underline">Free Tour</a>
 </div>
@@ -155,12 +161,12 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <input type="hidden" name="objet_id" :value="objet.id">
                     <input type="hidden" name="view_details" value="1">
 
-                    <p v-if="objet.type === 'chauffage'">Température: {{ objet.temperature }}</p>
-                    <p v-if="objet.type === 'television'">Chaîne: {{ objet.chaine }}, Volume: {{ objet.volume }}</p>
-                    <p v-if="objet.type === 'machine_laver'">Durée: {{ objet.duree }}</p>
-                    <p v-if="objet.type === 'lave_vaisselle'">Programme: {{ objet.programme }}, Durée: {{ objet.duree }}</p>
-                    <p v-if="objet.type === 'four'">Mode: {{ objet.mode }}, Durée: {{ objet.duree }}</p>
-                    <p v-if="objet.type === 'rideaux'">Position: {{ objet.position }}</p>
+                    <p v-if="objet.type === 'chauffage'">Température: {{ objet.temperature }}, Consulté le:{{ objet.consult}}</p>
+                    <p v-if="objet.type === 'television'">Chaîne: {{ objet.chaine }}, Volume: {{ objet.volume }}, Consulté le:{{ objet.consult}}</p>
+                    <p v-if="objet.type === 'machine_laver'">Programme: {{ objet.programme }},   Durée: {{ objet.duree }}, Consulté le:{{ objet.consult}}</p>
+                    <p v-if="objet.type === 'lave_vaisselle'">Programme: {{ objet.programme }}, Durée: {{ objet.duree }}, Consulté le:{{ objet.consult}}</p>
+                    <p v-if="objet.type === 'four'">Mode: {{ objet.mode }}, Durée: {{ objet.duree }}, Consulté le:{{ objet.consult}}</p>
+                    <p v-if="objet.type === 'rideaux'">Position: {{ objet.position }}, Consulté le:{{ objet.consult}}</p>
 
                     <button type="submit" class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 transition">
                         Valider la consultation (+1pt)
@@ -170,7 +176,6 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <form v-if="points >= 5" method="post" class="mt-2">
                     <input type="hidden" name="objet_id" :value="objet.id">
                     <input type="hidden" name="modifier_details" value="1">
-
                     <label class="block text-sm font-medium">État:</label>
                     <select name="etat" class="border p-1 rounded w-full">
                         <option value="allumé">Allumé</option>
@@ -189,7 +194,45 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <label class="block text-sm font-medium">Volume:</label>
                         <input type="number" name="volume" :value="objet.volume" class="border p-1 rounded w-full">
                     </div>
-                    
+                    <div v-if="objet.type === 'machine_laver'">
+                    <label class="block text-sm font-medium">Programme:</label>
+                    <select name="programme" class="border p-1 rounded w-full">
+                        <option value="Normale">Normale</option>
+                        <option value="Intensif">Intensif</option>
+                        <option value="Eco">Eco</option>
+                        <option value="Rapide">Rapide</option>
+                    </select>
+                        <label class="block text-sm font-medium">Durée:</label>
+                        <input type="duree" name="duree" :value="objet.duree" class="border p-1 rounded w-full">
+                    </div>
+                    <div v-if="objet.type === 'lave_vaisselle'">
+                    <label class="block text-sm font-medium">Programme:</label>
+                    <select name="programme" class="border p-1 rounded w-full">
+                        <option value="Normale">Normale</option>
+                        <option value="Intensif">Intensif</option>
+                        <option value="Eco">Eco</option>
+                        <option value="Rapide">Rapide</option>
+                    </select>
+                        <label class="block text-sm font-medium">Durée:</label>
+                        <input type="duree" name="duree" :value="objet.duree" class="border p-1 rounded w-full">
+                    </div>
+                    <div v-if="objet.type === 'four'">
+                    <label class="block text-sm font-medium">Mode:</label>
+                    <select name="mode" class="border p-1 rounded w-full">
+                        <option value="Convection">Convection</option>
+                        <option value="Grill">Grill</option>
+                        <option value="Chaleur_tournante">Chaleur tournante</option>
+                    </select>
+                        <label class="block text-sm font-medium">Durée:</label>
+                        <input type="duree" name="duree" :value="objet.duree" class="border p-1 rounded w-full">
+                    </div>
+                    <div v-if="objet.type === 'rideaux'">
+                    <label class="block text-sm font-medium">Position:</label>
+                    <select name="position" class="border p-1 rounded w-full">
+                        <option value="Ouvert">Ouvert</option>
+                        <option value="Ferme">Fermé</option>
+                    </select>
+                    </div>
                     <button type="submit" class="mt-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition">
                         Modifier les détails (+1pt)
                     </button>

@@ -25,7 +25,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 $points = $user['points'] ?? 0;
 
 // Récupération des utilisateurs
-$sql = "SELECT id, pseudo, age, sexe, grade, photo FROM users";
+$sql = "SELECT id, pseudo, age, sexe, grade, photo, points FROM users";
 $stmt = $bdd->prepare($sql);
 $stmt->execute();
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -59,8 +59,8 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .container {
-            width: 80%;
-            max-width: 1000px;
+            width: 90%;
+            max-width: 1200px;
             background: white;
             padding: 20px;
             border-radius: 8px;
@@ -80,7 +80,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
@@ -91,6 +91,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             border-radius: 8px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
             display: flex;
+            flex-direction: column;
             align-items: center;
             text-align: left;
             transition: transform 0.2s;
@@ -101,8 +102,8 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .profile-card img {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             object-fit: cover;
             border-radius: 50%;
             margin-right: 15px;
@@ -133,7 +134,8 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <h3>@{{ profil.pseudo }}</h3>
                     <p><strong>Âge:</strong> {{ profil.age }}</p>
                     <p><strong>Sexe:</strong> {{ profil.sexe }}</p>
-                    <p><strong>Grade:</strong> {{ profil.grade }}</p>
+                    <p><strong>Role:</strong> {{ profil.grade }}</p>
+                    <p><strong>Niveaux:</strong> {{ profil.points}}</p>
                 </div>
                 <?php if ($points >= 8) : ?>
                     <div class="admin-actions">

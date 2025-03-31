@@ -46,14 +46,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
     $age = $_POST['age'];
     $sexe = $_POST['sexe'];
     $grade = $_POST['grade'];
+    $niveaux = $_POST['niveaux'];
 
-    $sql = "UPDATE users SET pseudo = :pseudo, age = :age, sexe = :sexe, grade = :grade WHERE id = :id";
+    $sql = "UPDATE users SET pseudo = :pseudo, age = :age, sexe = :sexe, grade = :grade, niveaux = :niveaux WHERE id = :id";
     $stmt = $bdd->prepare($sql);
     $stmt->execute([
         'pseudo' => $pseudo,
         'age' => $age,
         'sexe' => $sexe,
         'grade' => $grade,
+        'niveaux' => $niveaux,
         'id' => $edit_id
     ]);
     header("Location: liste_profil.php");
@@ -75,10 +77,80 @@ if (isset($_GET['edit_id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Admin Utilisateurs</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+a {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+p {
+    color: red;
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
-
-<a href="liste_profil.php" class="bg-gray-500 text-white px-4 py-2 rounded">⬅ Retour</a>
+<a href="liste_profil.php" class="text-blue-500 hover:underline">&#8592; Retour</a>
 
 <h1>Modifier un utilisateur</h1>
 
@@ -93,6 +165,8 @@ if (isset($_GET['edit_id'])) {
         <input type="text" name="sexe" value="<?php echo $edit_user['sexe']; ?>">
         <label>Grade:</label>
         <input type="text" name="grade" value="<?php echo $edit_user['grade']; ?>">
+        <label>Type:</label>
+        <input type="text" name="niveaux" value="<?php echo $edit_user['niveaux']; ?>">
         <button type="submit">Modifier</button>
     </form>
 <?php endif; ?>
