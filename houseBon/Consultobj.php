@@ -46,8 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['objet_id']) && isset(
     $stmt = $bdd->prepare("UPDATE users SET points = :points WHERE id = :user_id");
     $stmt->execute(['points' => $points, 'user_id' => $user_id]);
     
-    $sql = "UPDATE objets SET consult = NOW()"; // On met à jour la date de consultation
-    $params = ['id' => $objet_id];
+    $stmt = $bdd->prepare("UPDATE objets SET consult = NOW() WHERE id = :objet_id");
+    $stmt->execute(['objet_id' => $objet_id]);
 
     // Enregistrer l'utilisation
     $sql = "INSERT INTO utilisations (user_id, objet_id) VALUES (:user_id, :objet_id)";
@@ -62,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['objet_id']) && isset(
     $nouveau_mode = $_POST['mode'] ?? null;
     $nouvelle_chaine = $_POST['chaine'] ?? null;
     $nouveau_volume = $_POST['volume'] ?? null;
+    $nouvelle_position = $_POST['position'] ?? null;
 
     $sql = "UPDATE objets SET etat = :etat";
     $params = ['etat' => $nouvel_etat, 'id' => $objet_id];
@@ -89,6 +90,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['objet_id']) && isset(
     if ($nouveau_volume !== null) {
         $sql .= ", volume = :volume";
         $params['volume'] = $nouveau_volume;
+    }
+    if ($nouvelle_position !== null) {
+        $sql .= ", position = :position";
+        $params['position'] = $nouvelle_position;
     }
 
     $sql .= " WHERE id = :id";
