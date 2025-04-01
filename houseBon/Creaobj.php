@@ -85,84 +85,156 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Créer un Objet</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 2rem;
+        }
+        a {
+            color: #00bcd4;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        form {
+            max-width: 600px;
+            margin: auto;
+            background-color: #2a2a2a;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        label {
+            display: block;
+            margin-bottom: 1rem;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #388e3c;
+        }
+    </style>
 </head>
 <body>
+<a href="Objadmin.php">&#8592; Retour</a>
+<h2>Créer un Nouvel Objet</h2>
+<div id="app">
+    <form method="post" enctype="multipart/form-data">
+        <label>Nom:
+            <input type="text" name="nom" required>
+        </label>
+        <label>Image:
+            <input type="file" name="photo" accept="image/*" required>
+        </label>
+        <label>Type:
+            <select name="type" v-model="selectedType">
+                <option value="chauffage">Chauffage</option>
+                <option value="machine_laver">Machine à laver</option>
+                <option value="four">Four</option>
+                <option value="rideaux">Rideaux</option>
+                <option value="lave_vaisselle">Lave-vaisselle</option>
+                <option value="television">Télévision</option>
+                <option value="lumiere">Lumière</option>
+            </select>
+        </label>
+        <label>État:
+            <select name="etat">
+                <option value="allumé">Allumé</option>
+                <option value="éteint">Éteint</option>
+            </select>
+        </label>
+        <label>Connectivité:
+            <select name="connectivite">
+                <option value="Wifi">Wifi</option>
+                <option value="Ethernet">Ethernet</option>
+                <option value="Bluetooth">Bluetooth</option>
+                <option value="NON">Aucune</option>
+            </select>
+        </label>
+        <label>Consommation:
+            <input type="number" name="consomation">
+        </label>
 
-<div class="p-6">
-    <a href="Objadmin.php" class="text-blue-500 hover:underline">&#8592; Retour</a>
-    <h2 class="text-2xl font-bold mb-4">Créer un Nouvel Objet</h2>
- <div id="app">
-        <form method="post" enctype="multipart/form-data" class="space-y-4">
-            <label>Nom: <input type="text" name="nom" required class="border p-2 rounded w-full"></label>
-            <label>Image: <input type="file" name="photo" accept="image/*" required class="border p-2"></label><br>
-            <label>Type:
-                <select name="type" v-model="selectedType" class="border p-2 rounded w-full">
-                    <option value="chauffage">Chauffage</option>
-                    <option value="machine_laver">Machine à laver</option>
-                    <option value="four">Four</option>
-                    <option value="rideaux">Rideaux</option>
-                    <option value="lave_vaisselle">Lave-vaisselle</option>
-                    <option value="television">Télévision</option>
-                    <option value="lumiere">Lumière</option>
+        <div v-if="selectedType === 'chauffage'">
+            <label>Température:
+                <input type="number" name="temperature">
+            </label>
+        </div>
+
+        <div v-if="selectedType === 'machine_laver' || selectedType === 'lave_vaisselle'">
+            <label>Programme:
+                <select name="programme">
+                    <option value="Normal">Normal</option>
+                    <option value="Intensif">Intensif</option>
+                    <option value="Éco">Éco</option>
+                    <option value="Rapide">Rapide</option>
                 </select>
             </label>
-            <label>État:
-                <select name="etat" class="border p-2 rounded w-full">
-                    <option value="allumé">Allumé</option>
-                    <option value="éteint">Éteint</option>
-                </select>
-                <label>Connectivité:
-                <select name="connectivite" class="border p-2 rounded w-full">
-                    <option value="Wifi">Wifi</option>
-                    <option value="Ethernet">Ethernet</option>
-                    <option value="Bluetooth">Bluetooth</option>
-                    <option value="NON">Aucune</option>
-                </select>
-                <label>Consomation: <input type="number" name="consomation" class="border p-2 rounded w-full"></label>
-            
-            <div v-if="selectedType === 'chauffage'">
-                <label>Température: <input type="number" name="temperature" class="border p-2 rounded w-full"></label>
-            </div>
-            <div v-if="selectedType === 'machine_laver' || selectedType === 'lave_vaisselle'">
-                <label>Programme:
-                    <select name="programme" class="border p-2 rounded w-full">
-                        <option value="Normal">Normal</option>
-                        <option value="Intensif">Intensif</option>
-                        <option value="Éco">Éco</option>
-                        <option value="Rapide">Rapide</option>
-                    </select>
-                </label>
-                <label>Durée: <input type="number" name="duree" class="border p-2 rounded w-full"></label>
-            </div>
-            <div v-if="selectedType === 'four'">
-                <label>Mode:
-                    <select name="mode" class="border p-2 rounded w-full">
-                        <option value="Convection">Convection</option>
-                        <option value="Grill">Grill</option>
-                        <option value="Chaleur_tournante">Chaleur tournante</option>
-                    </select>
-                </label>
-                <label>Durée: <input type="number" name="duree" class="border p-2 rounded w-full"></label>
-            </div>
-            <div v-if="selectedType === 'rideaux'">
-                <label>Position:
-                    <select name="position" class="border p-2 rounded w-full">
-                        <option value="Ouvert">Ouvert</option>
-                        <option value="Ferme">Fermé</option>
-                    </select>
-                </label>
-            </div>
-            <div v-if="selectedType === 'television'">
-                <label>Chaîne: <input type="text" name="chaine" class="border p-2 rounded w-full"></label>
-                <label>Volume: <input type="number" name="volume" class="border p-2 rounded w-full"></label>
-            </div>
+            <label>Durée:
+                <input type="number" name="duree">
+            </label>
+        </div>
 
-            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 ">Créer</button>
-        </form>
-    </div>
+        <div v-if="selectedType === 'four'">
+            <label>Mode:
+                <select name="mode">
+                    <option value="Convection">Convection</option>
+                    <option value="Grill">Grill</option>
+                    <option value="Chaleur_tournante">Chaleur tournante</option>
+                </select>
+            </label>
+            <label>Durée:
+                <input type="number" name="duree">
+            </label>
+        </div>
+
+        <div v-if="selectedType === 'rideaux'">
+            <label>Position:
+                <select name="position">
+                    <option value="Ouvert">Ouvert</option>
+                    <option value="Ferme">Fermé</option>
+                </select>
+            </label>
+        </div>
+
+        <div v-if="selectedType === 'television'">
+            <label>Chaîne:
+                <input type="text" name="chaine">
+            </label>
+            <label>Volume:
+                <input type="number" name="volume">
+            </label>
+        </div>
+
+        <button type="submit">Créer</button>
+    </form>
 </div>
-
 <script>
 const { createApp } = Vue;
 createApp({
@@ -173,6 +245,5 @@ createApp({
     }
 }).mount('#app');
 </script>
-
 </body>
 </html>
