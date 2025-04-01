@@ -75,97 +75,85 @@ if (isset($_GET['edit_id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Admin Utilisateurs</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-<style>
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
-}
-
-h1 {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-a {
-    display: inline-block;
-    margin-bottom: 20px;
-    font-size: 16px;
-    color: #007bff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-form {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    margin: 0 auto;
-    text-align: left;
-}
-
-label {
-    display: block;
-    margin: 10px 0 5px;
-    font-weight: bold;
-}
-
-input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-p {
-    color: red;
-    font-weight: bold;
-}
-</style>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 2rem;
+        }
+        a {
+            color: #00bcd4;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            text-align: center;
+            color: #00bcd4;
+            margin-bottom: 2rem;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            background-color: #2a2a2a;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        label {
+            display: block;
+            margin: 1rem 0 0.25rem;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background-color: #444;
+            color: #fff;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #388e3c;
+        }
+        p {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<a href="liste_profil.php" class="text-blue-500 hover:underline">&#8592; Retour</a>
-
+<a href="liste_profil.php">&#8592; Retour</a>
 <h1>Modifier un utilisateur</h1>
-
 <?php if ($edit_user): ?>
     <form method="post">
-        <input type="hidden" name="edit_id" value="<?php echo $edit_user['id']; ?>">
+        <input type="hidden" name="edit_id" value="<?= $edit_user['id']; ?>">
         <label>Pseudo:</label>
-        <input type="text" name="pseudo" value="<?php echo $edit_user['pseudo']; ?>">
+        <input type="text" name="pseudo" value="<?= $edit_user['pseudo']; ?>">
         <label>Âge:</label>
-        <input type="number" name="age" value="<?php echo $edit_user['age']; ?>">
+        <input type="number" name="age" value="<?= $edit_user['age']; ?>">
         <label>Sexe:</label>
-        <input type="text" name="sexe" value="<?php echo $edit_user['sexe']; ?>">
+        <input type="text" name="sexe" value="<?= $edit_user['sexe']; ?>">
         <label>Grade:</label>
-        <input type="text" name="grade" value="<?php echo $edit_user['grade']; ?>">
+        <input type="text" name="grade" value="<?= $edit_user['grade']; ?>">
         <button type="submit">Modifier</button>
     </form>
 <?php endif; ?>
-
 </body>
 </html>
