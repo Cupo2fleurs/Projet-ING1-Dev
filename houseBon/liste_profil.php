@@ -139,7 +139,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <?php if ($points >= 8) : ?>
                     <div class="admin-actions">
-                        <a :href="'admin_users.php?edit_id=' + profil.id" class="bg-blue-500 text-white px-3 py-1 rounded">Modifier</a>
+                        <a :href="'admin_users.php?edit_id=' + profil.id" class="bg-blue-500 text-white px-3 py-2 rounded">Modifier</a>
                         <form method="post" action="admin_users.php" style="display:inline;">
                             <input type="hidden" name="delete_id" :value="profil.id">
                             <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded">Supprimer</button>

@@ -46,16 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
     $age = $_POST['age'];
     $sexe = $_POST['sexe'];
     $grade = $_POST['grade'];
-    $niveaux = $_POST['niveaux'];
 
-    $sql = "UPDATE users SET pseudo = :pseudo, age = :age, sexe = :sexe, grade = :grade, niveaux = :niveaux WHERE id = :id";
+    $sql = "UPDATE users SET pseudo = :pseudo, age = :age, sexe = :sexe, grade = :grade WHERE id = :id";
     $stmt = $bdd->prepare($sql);
     $stmt->execute([
         'pseudo' => $pseudo,
         'age' => $age,
         'sexe' => $sexe,
         'grade' => $grade,
-        'niveaux' => $niveaux,
         'id' => $edit_id
     ]);
     header("Location: liste_profil.php");
@@ -165,8 +163,6 @@ p {
         <input type="text" name="sexe" value="<?php echo $edit_user['sexe']; ?>">
         <label>Grade:</label>
         <input type="text" name="grade" value="<?php echo $edit_user['grade']; ?>">
-        <label>Type:</label>
-        <input type="text" name="niveaux" value="<?php echo $edit_user['niveaux']; ?>">
         <button type="submit">Modifier</button>
     </form>
 <?php endif; ?>
