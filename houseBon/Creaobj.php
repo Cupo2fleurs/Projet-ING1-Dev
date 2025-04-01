@@ -50,10 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $position = $_POST['position'] ?? null;
     $chaine = $_POST['chaine'] ?? null;
     $volume = $_POST['volume'] ?? null;
+    $consomation = $_POST['consomation'] ?? null;
+    $connectivite = $_POST['connectivite'] ?? null;
 
     // Insertion des données dans la base
-    $sql = "INSERT INTO objets (nom, type, etat, image_url, temperature, programme, duree, mode, position, chaine, volume)
-            VALUES (:nom, :type, :etat, :image_url, :temperature, :programme, :duree, :mode, :position, :chaine, :volume)";
+    $sql = "INSERT INTO objets (nom, type, etat, image_url, temperature, programme, duree, mode, position, chaine, volume, consomation, connectivite)
+            VALUES (:nom, :type, :etat, :image_url, :temperature, :programme, :duree, :mode, :position, :chaine, :volume, :consomation, :connectivite)";
     
     $stmt = $bdd->prepare($sql);
     $stmt->execute([
@@ -67,7 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'mode' => $mode,
         'position' => $position,
         'chaine' => $chaine,
-        'volume' => $volume
+        'volume' => $volume,
+        'consomation' => $consomation,
+        'connectivite' => $connectivite
     ]);
 
     header("Location: Objadmin.php");
@@ -100,17 +104,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="rideaux">Rideaux</option>
                     <option value="lave_vaisselle">Lave-vaisselle</option>
                     <option value="television">Télévision</option>
+                    <option value="lumiere">Lumière</option>
                 </select>
             </label>
             <label>État:
                 <select name="etat" class="border p-2 rounded w-full">
                     <option value="allumé">Allumé</option>
                     <option value="éteint">Éteint</option>
-                    <option value="en_cours">En cours</option>
-                    <option value="fermé">Fermé</option>
-                    <option value="ouvert">Ouvert</option>
                 </select>
-            </label>
+                <label>Connectivité:
+                <select name="connectivite" class="border p-2 rounded w-full">
+                    <option value="Wifi">Wifi</option>
+                    <option value="Ethernet">Ethernet</option>
+                    <option value="Bluetooth">Bluetooth</option>
+                    <option value="NON">Aucune</option>
+                </select>
+                <label>Consomation: <input type="number" name="consomation" class="border p-2 rounded w-full"></label>
             
             <div v-if="selectedType === 'chauffage'">
                 <label>Température: <input type="number" name="temperature" class="border p-2 rounded w-full"></label>
@@ -131,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <select name="mode" class="border p-2 rounded w-full">
                         <option value="Convection">Convection</option>
                         <option value="Grill">Grill</option>
-                        <option value="Chaleur tournante">Chaleur tournante</option>
+                        <option value="Chaleur_tournante">Chaleur tournante</option>
                     </select>
                 </label>
                 <label>Durée: <input type="number" name="duree" class="border p-2 rounded w-full"></label>
@@ -139,8 +148,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div v-if="selectedType === 'rideaux'">
                 <label>Position:
                     <select name="position" class="border p-2 rounded w-full">
-                        <option value="ouvert">Ouvert</option>
-                        <option value="fermé">Fermé</option>
+                        <option value="Ouvert">Ouvert</option>
+                        <option value="Ferme">Fermé</option>
                     </select>
                 </label>
             </div>
@@ -149,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label>Volume: <input type="number" name="volume" class="border p-2 rounded w-full"></label>
             </div>
 
-            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Créer</button>
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 ">Créer</button>
         </form>
     </div>
 </div>

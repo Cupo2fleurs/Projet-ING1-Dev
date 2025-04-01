@@ -1,26 +1,9 @@
 
-Afficher son profil
-
-Ajouter modif niveau dans profil
-
-Ameliorer BDD objet +de modification pour les objet
-Corriger bug rideaux allumé
-
-
 CSS au propre pour chaque page ( alignement,Couleur, taille texte)
 
-Faire un systeme de validation de l'inscription par l'admin
+Faire le diagramme du site
 
-Modifier ( Uniformiser ) le nom des fichier.php car pas logique pas beau ( tres moche )
-Faire le diagramme du site ( Apres avoir modifier le nom des fichier.php)
-
-
-
-Module Administration
-
-Ajouter date consultation objet
 Faire CSS
-Fusionner
 Free tour à faire au propre
 
 CSS:

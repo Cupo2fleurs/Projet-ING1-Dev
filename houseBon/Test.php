@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $params = ['id' => $objet_id, 'etat' => $_POST['etat'] ?? null];
         $updates = ['etat = :etat'];
 
-        foreach (['temperature', 'programme', 'duree', 'mode', 'chaine', 'volume', 'position','connectivite','consomation'] as $field) {
+        foreach (['temperature', 'programme', 'duree', 'mode', 'chaine', 'volume', 'position'] as $field) {
             if (!empty($_POST[$field])) {
                 $updates[] = "$field = :$field";
                 $params[$field] = $_POST[$field];
@@ -199,13 +199,12 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <form method="post">
         <input type="hidden" name="objet_id" :value="objet.id">
         <input type="hidden" name="view_details" value="1">
-        <p v-if="objet.type === 'chauffage'">Température: {{ objet.temperature }}°C <br>Consulté le: {{ objet.consult }} <br>Connectivité: {{ objet.connectivite }}, Consomation: {{ objet.consomation }}kWh</p>
-        <p v-if="objet.type === 'television'">Chaîne: {{ objet.chaine }}, Volume: {{ objet.volume }} <br> Consulté le: {{ objet.consult }}<br>Connectivité: {{ objet.connectivite }}, Consomation: {{ objet.consomation }}kWh</p>
-        <p v-if="objet.type === 'machine_laver'">Programme: {{ objet.programme }}, Durée: {{ objet.duree }}min <br> Consulté le: {{ objet.consult }}<br>Connectivité: {{ objet.connectivite }}, Consomation: {{ objet.consomation }}kWh</p>
-        <p v-if="objet.type === 'lave_vaisselle'">Programme: {{ objet.programme }}, Durée: {{ objet.duree }}min <br> Consulté le: {{ objet.consult }}<br>Connectivité: {{ objet.connectivite }}, Consomation: {{ objet.consomation }}kWh</p>
-        <p v-if="objet.type === 'four'">Mode: {{ objet.mode }}, Durée: {{ objet.duree }}min<br> Consulté le: {{ objet.consult }}<br>Connectivité: {{ objet.connectivite }}, Consomation: {{ objet.consomation }}kWh</p>
-        <p v-if="objet.type === 'rideaux'">Position: {{ objet.position }}<br> Consulté le: {{ objet.consult }}<br>Connectivité: {{ objet.connectivite }}, Consomation: {{ objet.consomation }}kWh</p>
-        <p v-if="objet.type === 'lumiere'">Connectivité: {{ objet.connectivite }}, Consomation: {{ objet.consomation }}kWh</p>
+        <p v-if="objet.type === 'chauffage'">Température: {{ objet.temperature }}, Consulté le: {{ objet.consult }}</p>
+        <p v-if="objet.type === 'television'">Chaîne: {{ objet.chaine }}, Volume: {{ objet.volume }}, Consulté le: {{ objet.consult }}</p>
+        <p v-if="objet.type === 'machine_laver'">Programme: {{ objet.programme }}, Durée: {{ objet.duree }}, Consulté le: {{ objet.consult }}</p>
+        <p v-if="objet.type === 'lave_vaisselle'">Programme: {{ objet.programme }}, Durée: {{ objet.duree }}, Consulté le: {{ objet.consult }}</p>
+        <p v-if="objet.type === 'four'">Mode: {{ objet.mode }}, Durée: {{ objet.duree }}, Consulté le: {{ objet.consult }}</p>
+        <p v-if="objet.type === 'rideaux'">Position: {{ objet.position }}, Consulté le: {{ objet.consult }}</p>
         <button type="submit" class="btn btn-green">Valider la consultation (+1pt)</button>
     </form>
 
@@ -217,6 +216,7 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <select name="etat">
             <option value="allumé">Allumé</option>
             <option value="éteint">Éteint</option>
+            <option value="en_cours">En cours</option>
         </select>
 
         <div v-if="objet.type === 'chauffage'">
