@@ -1,4 +1,7 @@
-<?php // aucune restriction de connexion pour Free Tour ?>
+<?php
+session_start();
+$isConnected = isset($_SESSION['user_id']);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -86,7 +89,11 @@
     <header>
         <h2>Chez les Bon, qu'est-ce qui se passe ?</h2>
         <div class="nav-link">
-            <a href="Consultobj.php">Retour aux objets</a>
+        <?php if ($isConnected): ?>
+            <a href="Consultobj.php" class="text-xl font-bold text-blue-500 hover:underline">Retour aux objets</a>
+        <?php else: ?>
+            <a href="Accueil.php" class="text-xl font-bold text-blue-500 hover:underline">Retour page d'accueil</a>
+        <?php endif; ?>
         </div>
     </header>
 
@@ -97,13 +104,21 @@
                 <p class="caption">{{ captions[currentIndex] }}</p>
             </div>
             <div class="text-content">
-                <p>Voici une petite présentation de notre site internet qui permet d'utiliser de façon simple et automatique les différents appareils de la maison.</p>
+            <p>Voici une petite présentation de notre site internet qui permet d'utiliser de façon simple et automatique les différents appareils de la maison.
+                    <br>Avec un système de création et de modification de profil pour avoir la classe dans la maison.
+                    <br>Un système de niveaux qui donne accès à tout un panel de fonctionnalités supplémentaires allant de la modification ou la création d'objet jusqu'au module Administrateurs du site.
+                    Pratique pour automatiser sa petite maison.
+                </p>
             </div>
         </div>
 
         <div class="row">
             <div class="text-content">
-                <p>Aujourd'hui, petite journée chacun est allé à son travail, Otis est revenu avec un 16.5/20 en Mathématiques puis est allé au Judo.</p>
+            <p>"Aujourd’hui, journée bien remplie ! Jean est parti tôt au travail, café en main, prêt à affronter une montagne de dossiers.
+                    <br> Bella, elle, a déposé les enfants à l’école avant d’aller faire quelques courses pour la maison.
+                    <br> De son côté, otis a passé son après-midi à réviser son exposé d’histoire pendant que Jeanne et Michelle, préparaient un bon gâteau aux pommes pour le goûter.
+                    <br> En fin d’après-midi, Carl, le voisin, est passé dire bonjour et donner un coup de main pour bricoler la clôture du jardin.
+                    <br><br> Une belle journée bien animée !"</p>
             </div>
             <div class="slideshow-container">
                 <img :src="smallImages[smallCurrentIndex]" alt="Diaporama">
