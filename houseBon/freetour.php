@@ -1,7 +1,4 @@
-<?php
-session_start();
-$isConnected = isset($_SESSION['user_id']);
-?>
+<?php // aucune restriction de connexion pour Free Tour ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,83 +6,98 @@ $isConnected = isset($_SESSION['user_id']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free Tour</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #1e1e1e;
+            color: #f0f0f0;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
         }
-
+        header {
+            background-color: #121212;
+            padding: 20px;
+            text-align: center;
+        }
+        header h2 {
+            font-size: 1.8rem;
+            color: #00bcd4;
+            margin: 0;
+        }
+        .nav-link {
+            display: block;
+            text-align: center;
+            margin: 10px;
+        }
+        .nav-link a {
+            color: #4caf50;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .nav-link a:hover {
+            text-decoration: underline;
+        }
         .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            width: 90%;
-            max-width: 1200px;
-            margin-top: 50px;
+            gap: 50px;
         }
-
         .row {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            width: 100%;
-            margin-bottom: 50px;
+            gap: 20px;
         }
-
         .slideshow-container {
-            position: relative;
-            width: 45%;
-            max-width: 600px;
-            overflow: hidden;
-            border-radius: 8px;
-            background: #fff;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            flex: 1 1 45%;
+            background: #2a2a2a;
+            border-radius: 12px;
             padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            text-align: center;
         }
-
-        .text-content {
-            width: 45%;
-            font-size: 1.2rem;
-            color: #333;
-            text-align: justify;
+        .slideshow-container img {
+            max-width: 100%;
+            border-radius: 8px;
         }
-
-        .slides {
-            width: 100%;
-        }
-
         .caption {
             margin-top: 10px;
-            font-size: 1.2rem;
-            color: #333;
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+        .text-content {
+            flex: 1 1 45%;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #ddd;
+        }
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <h2>Chez les Bon, qu'est-ce qui se passe ?</h2>
+        <div class="nav-link">
+            <a href="Consultobj.php">Retour aux objets</a>
+        </div>
+    </header>
 
-    <h2 class="text-2xl font-bold mb-4">Chez les Bon, qu'est-ce qui se passe ?</h2>
-    <div style="text-align: center; padding-left: 20px;">
-        <?php if ($isConnected): ?>
-            <a href="Consultobj.php" class="text-xl font-bold text-blue-500 hover:underline">Retour aux objets</a>
-        <?php else: ?>
-            <a href="Accueil.php" class="text-xl font-bold text-blue-500 hover:underline">Retour page d'accueil</a>
-        <?php endif; ?>
-    </div>
     <div id="app" class="container">
         <div class="row">
             <div class="slideshow-container">
-                <img :src="images[currentIndex]" class="slides" alt="Diaporama">
+                <img :src="images[currentIndex]" alt="Diaporama">
                 <p class="caption">{{ captions[currentIndex] }}</p>
             </div>
             <div class="text-content">
-                <p>Voici une petite présentation de notre site internet qui permet d'utiliser de façon simple et automatique les différents appareils de la maison</p>
+                <p>Voici une petite présentation de notre site internet qui permet d'utiliser de façon simple et automatique les différents appareils de la maison.</p>
             </div>
         </div>
 
@@ -94,7 +106,7 @@ $isConnected = isset($_SESSION['user_id']);
                 <p>Aujourd'hui, petite journée chacun est allé à son travail, Otis est revenu avec un 16.5/20 en Mathématiques puis est allé au Judo.</p>
             </div>
             <div class="slideshow-container">
-                <img :src="smallImages[smallCurrentIndex]" class="slides" alt="Diaporama">
+                <img :src="smallImages[smallCurrentIndex]" alt="Diaporama">
                 <p class="caption">{{ smallCaptions[smallCurrentIndex] }}</p>
             </div>
         </div>
@@ -112,7 +124,7 @@ $isConnected = isset($_SESSION['user_id']);
                 captions: [
                     'Le site possède une gestion des objets connectés dans toute la maison ;)',
                     'Une visualisation des profils de tous les utilisateurs !',
-                    'Un système de point pour pouvoir avoir accès à plus de fonctionnalités dans la maison (Ajout de nouveaux objets) '
+                    'Un système de point pour accéder à plus de fonctionnalités dans la maison.'
                 ],
                 smallImages: [
                     'uploads/A.png',
@@ -140,6 +152,5 @@ $isConnected = isset($_SESSION['user_id']);
             }
         });
     </script>
-
 </body>
 </html>
