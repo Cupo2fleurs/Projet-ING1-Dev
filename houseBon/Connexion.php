@@ -26,6 +26,23 @@
             width: 100%;
             max-width: 400px;
             text-align: center;
+            position: relative;
+        }
+
+        .btn-retour {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #00bcd4;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-retour:hover {
+            background-color: #0097a7;
         }
 
         h2 {
@@ -66,9 +83,10 @@
 
         .footer {
             position: absolute;
-            bottom: 20px;
-            text-align: center;
+            bottom: -3rem;
+            left: 0;
             width: 100%;
+            text-align: center;
             font-size: 0.9rem;
             color: #888;
         }
@@ -76,17 +94,20 @@
 </head>
 <body>
     <div id="app" class="container">
+        <a href="Accueil.php" class="btn-retour">← Retour à l'accueil</a>
+
         <form id="inscri" method="POST" action="VerifConnexion.php">
             <h2>Se connecter</h2>
+
             <label for="nom">Votre Nom</label>
             <input type="text" id="nom" name="nom" required v-model="nom">
-            
+
             <label for="prenom">Votre Prénom</label>
             <input type="text" id="prenom" name="prenom" required v-model="prenom">
-            
+
             <label for="mdp">Mot de passe</label>
             <input type="password" id="mdp" name="mdp" required v-model="mdp">
-            
+
             <input type="submit" value="Valider" name="ok">
         </form>
     </div>
