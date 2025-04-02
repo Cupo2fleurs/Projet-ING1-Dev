@@ -133,13 +133,15 @@ $isConnected = isset($_SESSION['user_id']);
             data: {
                 images: [
                     'uploads/1.png',
-                    'uploads/2.png',
-                    'uploads/3.png'
+                    'uploads/4.png',
+                    'uploads/5.png',
+                    'uploads/6.png'
                 ],
                 captions: [
                     'Le site possède une gestion des objets connectés dans toute la maison ;)',
                     'Une visualisation des profils de tous les utilisateurs !',
-                    'Un système de point pour accéder à plus de fonctionnalités dans la maison.'
+                    'Un système de point pour accéder à plus de fonctionnalités dans la maison.',
+                    'Permet la manipulation des objets à distance'
                 ],
                 smallImages: [
                     'uploads/A.png',
