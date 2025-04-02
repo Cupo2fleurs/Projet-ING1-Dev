@@ -142,4 +142,3 @@ $user = $requete->fetch();
   <div id="result"></div>
 </body>
 </html>
-

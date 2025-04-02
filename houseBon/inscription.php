@@ -65,92 +65,104 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #2a2a2a;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin: 1rem 0 0.5rem;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        input[type="file"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #3a3a3a;
+            color: white;
+            font-size: 1rem;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1.5rem;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #388e3c;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Inscription</h1>
+        <form id="profilForm" method="POST" action="inscription.php" enctype="multipart/form-data">
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required>
 
-<style>
-    body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7fa;
-            margin: 0;
-            padding: 0;
-        }
-     #profilForm{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    }
+            <label for="prenom">Prénom :</label>
+            <input type="text" id="prenom" name="prenom" required>
 
-    .rest input{
-        width: 100%;
-        max-width: 300px; 
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-    .rest label{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
+            <label for="mdp">Mot de passe :</label>
+            <input type="password" id="mdp" name="mdp" required>
 
-    }
+            <label for="pseudo">Pseudo :</label>
+            <input type="text" id="pseudo" name="pseudo">
 
-    h1 {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        font-size:35px;
-    }
-    .gpsexe {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Espacement entre les éléments */
-  }
-</style>
-    <a href="Accueil.php" class="text-2xl font-bold text-blue-500 mb-4  hover:underline">&#8592; Retour</a>
-    <h1>Inscription</h1>
+            <label for="age">Âge :</label>
+            <input type="number" id="age" name="age" min="1" max="150">
 
-    <form id="profilForm" method="POST" action="inscription.php" enctype="multipart/form-data">
-    <div class="rest">
-        <label for="nom">Nom :</label><br>
-        <input type="text" id="nom" name="nom" required><br><br>
+            <label for="sexe">Sexe :</label>
+            <select id="sexe" name="sexe" required>
+                <option value="Homme">Homme</option>
+                <option value="Femme">Femme</option>
+                <option value="Autre">Autre</option>
+            </select>
 
-        <label for="prenom">Prénom :</label><br>
-        <input type="text" id="prenom" name="prenom" required><br><br>
+            <label for="born">Date de naissance :</label>
+            <input type="date" id="born" name="born">
 
-        <label for="mdp">Mot de passe :</label><br>
-        <input type="password" id="mdp" name="mdp" required><br><br>
+            <label for="photo">Photo :</label>
+            <input type="file" id="photo" name="photo" accept="image/*">
 
-        <label for="pseudo">Pseudo :</label><br>
-        <input type="text" id="pseudo" name="pseudo"><br><br>
-
-        <label for="age">Âge :</label><br>
-        <input type="number" id="age" name="age" min="1" max="150"><br><br>
-        </div>
-        <div class="gpsexe">
-        <label for="sexe">Sexe :</label><br>
-        <select id="sexe" name="sexe" required>
-            <option value="Homme">Homme</option>
-            <option value="Femme">Femme</option>
-            <option value="Autre">Autre</option>
-        </select><br><br>
-</div>
-<div class="rest">
-        <label for="grade">Grade :</label><br>
-        <input type="text" id="grade" name="grade" value="Visiteur" readonly><br><br> <!-- Le grade est fixe à "Visiteur" -->
-
-        <label for="born">Date de naissance :</label><br>
-        <input type="date" id="born" name="born"><br><br>
-
-        <label for="photo">Photo :</label><br>
-        <input type="file" id="photo" name="photo" accept="image/*"><br><br> <!-- Champ pour télécharger une image -->
-
-        <input type="submit" value="S'inscrire">
-</div>
-    </form>
+            <input type="submit" value="S'inscrire">
+        </form>
+    </div>
 </body>
 </html>

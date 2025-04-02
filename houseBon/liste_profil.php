@@ -119,6 +119,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .admin-actions a,
         .admin-actions button {
             background-color: #00bcd4;
+            text-decoration:none;
             color: white;
             padding: 0.5rem 1rem;
             border: none;
@@ -129,6 +130,8 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         .admin-actions button {
             background-color: #f44336;
+            height:38px;
+            font-size:15px;
         }
         .admin-actions a:hover {
             background-color: #0097a7;
