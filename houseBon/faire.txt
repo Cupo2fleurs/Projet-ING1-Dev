@@ -1,0 +1,14 @@
+
+CSS au propre pour chaque page ( alignement,Couleur, taille texte)
+
+Faire le diagramme du site
+
+Faire CSS
+Free tour à faire au propre
+
+CSS:
+Consultobj
+index 
+login 
+inscription
+profil
