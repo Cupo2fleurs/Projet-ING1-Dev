@@ -54,7 +54,7 @@ L'application repose sur un système de points qui définit les différents nive
 
 ## Technologies Utilisées
 - **Back-end** : PHP, MySQL
-- **Front-end** : HTML, CSS, JavaScript,Vue.js
+- **Front-end** : HTML, CSS, JavaScript(Vue.js)
 - **Serveur** : Apache (via WAMP)
 
 ## Fonctionnalités manquantes
