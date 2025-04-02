@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'Accueil</title>
+    
+    <!-- Importation de Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    
     <style>
+        /* Styles généraux du corps de la page */
         body {
             font-family: 'Segoe UI', sans-serif;
             background: url('uploads/maison.jpg') no-repeat center center/cover;
@@ -18,6 +22,7 @@
             height: 100vh;
         }
 
+        /* Conteneur principal */
         .container {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 40px;
@@ -29,23 +34,27 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
+        /* Effet d'ombre et de levée au survol */
         .container:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
         }
 
+        /* Style des titres */
         h1 {
             font-size: 2rem;
             color: #00bcd4;
             margin-bottom: 10px;
         }
 
+        /* Style des paragraphes */
         p {
             color: #ddd;
             margin-bottom: 20px;
             font-size: 1.1rem;
         }
 
+        /* Style des boutons */
         .btn {
             background-color: #00bcd4;
             color: white;
@@ -60,10 +69,12 @@
             display: inline-block;
         }
 
+        /* Effet au survol des boutons */
         .btn:hover {
             background-color: #0097a7;
         }
 
+        /* Style du bouton "Free Tour" */
         .free-tour {
             background-color: #4caf50;
             color: white;
@@ -77,10 +88,13 @@
             margin-top: 30px;
         }
 
+        /* Effet au survol du bouton "Free Tour" */
         .free-tour:hover {
             background-color: #388e3c;
         }
-            .fade-in {
+        
+        /* Animation de fondu à l'apparition */
+        .fade-in {
             opacity: 0;
             transform: translateY(20px);
             animation: fadeIn 1s ease-out forwards;
@@ -95,6 +109,7 @@
     </style>
 </head>
 <body>
+    <!-- Conteneur Vue.js -->
     <div id="app" class="container fade-in">
         <h1>{{ welcomeMessage }}</h1>
         <p>{{ description }}</p>
@@ -102,9 +117,11 @@
         <a href="inscription.php" class="btn">{{ signupText }}</a>
     </div>
 
+    <!-- Bouton Free Tour hors de Vue.js -->
     <a href="freetour.php" class="free-tour">FREE TOUR</a>
 
     <script>
+        // Initialisation de l'application Vue.js
         new Vue({
             el: '#app',
             data: {

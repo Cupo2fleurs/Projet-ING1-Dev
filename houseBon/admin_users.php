@@ -6,18 +6,18 @@ try {
     $pdo_option = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
     $bdd = new PDO('mysql:host=localhost;dbname=utilisateur', 'root', '', $pdo_option);
 } catch (Exception $ex) {
-    die("Erreur : " . $ex->getMessage());
+    die("Erreur : " . $ex->getMessage()); // En cas d'erreur de connexion, on affiche un message et on arrête le script
 }
 
-// Vérification de la connexion
+// Vérification de la connexion de l'utilisateur
 if (!isset($_SESSION['user_id'])) {
     echo "<p style='color:red;'>Vous devez être connecté.</p>";
-    exit();
+    exit(); // Arrête l'exécution du script si l'utilisateur n'est pas connecté
 }
 
 $user_id = $_SESSION['user_id'];
 
-// Vérification des points
+// Vérification des points de l'utilisateur
 $sql = "SELECT points FROM users WHERE id = :user_id";
 $stmt = $bdd->prepare($sql);
 $stmt->execute(['user_id' => $user_id]);
@@ -26,7 +26,7 @@ $points = $user['points'] ?? 0;
 
 if ($points < 8) {
     echo "<p style='color:red;'>Vous n'avez pas assez de points pour modifier ou supprimer des utilisateurs.</p>";
-    exit();
+    exit(); // Arrête l'exécution du script si l'utilisateur n'a pas assez de points
 }
 
 // Suppression d'un utilisateur
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     $sql = "DELETE FROM users WHERE id = :id";
     $stmt = $bdd->prepare($sql);
     $stmt->execute(['id' => $delete_id]);
-    header("Location: liste_profil.php");
+    header("Location: liste_profil.php"); // Redirige après suppression
     exit();
 }
 
@@ -56,11 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
         'grade' => $grade,
         'id' => $edit_id
     ]);
-    header("Location: liste_profil.php");
+    header("Location: liste_profil.php"); // Redirige après modification
     exit();
 }
 
-// Récupération de l'utilisateur à modifier
+// Récupération des informations d'un utilisateur à modifier
 $edit_user = null;
 if (isset($_GET['edit_id'])) {
     $sql = "SELECT * FROM users WHERE id = :id";

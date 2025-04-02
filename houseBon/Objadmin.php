@@ -147,25 +147,30 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <script>
-        const { createApp } = Vue;
-        createApp({
-            data() {
-                return {
-                    search: '',
-                    objets: <?= json_encode($objets) ?>
-                };
-            },
-            computed: {
-                filteredObjets() {
-                    return this.objets.filter(objet => {
-                        const searchLower = this.search.toLowerCase();
-                        return Object.values(objet).some(value => 
-                            value && value.toString().toLowerCase().includes(searchLower)
-                        );
-                    });
-                }
+    // Crée une nouvelle instance Vue.js
+    const { createApp } = Vue;
+    createApp({
+        // Définition des données de l'application
+        data() {
+            return {
+                search: '', // Le texte de recherche de l'utilisateur
+                objets: <?= json_encode($objets) ?> // Liste des objets à afficher, reçue depuis le serveur en JSON (convertie avec PHP)
+            };
+        },
+
+        // Filtrer dynamiquement les objets
+        computed: {
+            filteredObjets() {
+                return this.objets.filter(objet => {
+                    const searchLower = this.search.toLowerCase();
+                    return Object.values(objet).some(value => 
+                        value && value.toString().toLowerCase().includes(searchLower) // Vérifie si la valeur contient la recherche
+                    );
+                });
             }
-        }).mount('#app');
-    </script>
+        }
+    }).mount('#app'); // Monte l'application Vue.js sur l'élément avec l'ID 'app'
+</script>
+
 </body>
 </html>

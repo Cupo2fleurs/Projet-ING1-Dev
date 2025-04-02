@@ -270,28 +270,34 @@ $objets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <script>
-const { createApp } = Vue;
+const { createApp } = Vue; // Importation de Vue et utilisation de createApp pour créer une application Vue.js
+
 createApp({
     data() {
         return {
             search: '',
             points: <?= $points ?>,
-            objets: <?= json_encode($objets) ?>
+            objets: <?= json_encode($objets) ?> // Récupération des objets depuis PHP et conversion en JSON pour utilisation dans Vue.js
         };
     },
     computed: {
         filteredObjets() {
-            return this.objets.filter(objet => {const searchLower = this.search.toLowerCase();
-                return Object.values(objet).some(value => value && value.toString().toLowerCase().includes(searchLower));
+            // Filtrage des objets en fonction de la valeur de recherche
+            return this.objets.filter(objet => {
+                const searchLower = this.search.toLowerCase();
+                return Object.values(objet).some(value => 
+                    value && value.toString().toLowerCase().includes(searchLower)
+                );
             });
         }
     },
     methods: {
         toggleDetails(objet) {
-            objet.showDetails = !objet.showDetails;
+            objet.showDetails = !objet.showDetails; // Alterne l'affichage des détails de l'objet (true/false)
         }
     }
 }).mount('#app');
 </script>
+
 </body>
 </html>

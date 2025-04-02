@@ -128,46 +128,64 @@ $isConnected = isset($_SESSION['user_id']);
     </div>
 
     <script>
-        new Vue({
-            el: '#app',
-            data: {
-                images: [
-                    'uploads/1.png',
-                    'uploads/4.png',
-                    'uploads/5.png',
-                    'uploads/6.png'
-                ],
-                captions: [
-                    'Le site possède une gestion des objets connectés dans toute la maison ;)',
-                    'Une visualisation des profils de tous les utilisateurs !',
-                    'Un système de point pour accéder à plus de fonctionnalités dans la maison.',
-                    'Permet la manipulation des objets à distance'
-                ],
-                smallImages: [
-                    'uploads/A.png',
-                    'uploads/B.png',
-                    'uploads/C.png'
-                ],
-                smallCaptions: [
-                    'Température de la journée :)',
-                    'Nouveauté dans la famille, Smile nous rejoint YOUPIIII !!!!',
-                    'Rénovation de la salle de bain'
-                ],
-                currentIndex: 0,
-                smallCurrentIndex: 0
-            },
-            mounted() {
-                this.startSlideshow();
-            },
-            methods: {
-                startSlideshow() {
-                    setInterval(() => {
-                        this.currentIndex = (this.currentIndex + 1) % this.images.length;
-                        this.smallCurrentIndex = (this.smallCurrentIndex + 1) % this.smallImages.length;
-                    }, 3000);
-                }
+    // Crée une nouvelle instance Vue.js
+    new Vue({
+        el: '#app', // Le DOM de l'application est lié à l'élément HTML avec l'ID 'app'
+        
+        // Données de l'application
+        data: {
+            // Liste des images principales
+            images: [
+                'uploads/1.png',
+                'uploads/4.png',
+                'uploads/5.png', 
+                'uploads/6.png'  
+            ],
+            
+            // Légendes des images principales
+            captions: [
+                'Le site possède une gestion des objets connectés dans toute la maison ;)', 
+                'Une visualisation des profils de tous les utilisateurs !',
+                'Un système de point pour accéder à plus de fonctionnalités dans la maison.', 
+                'Permet la manipulation des objets à distance' 
+            ],
+            
+            // Liste des images secondaires
+            smallImages: [
+                'uploads/A.png', 
+                'uploads/B.png', 
+                'uploads/C.png' 
+            ],
+            
+            // Légendes des images secondaires
+            smallCaptions: [
+                'Température de la journée :)',
+                'Nouveauté dans la famille, Smile nous rejoint YOUPIIII !!!!',
+                'Rénovation de la salle de bain'
+            ],
+            
+            // Indices actuels pour l'image principale et l'image secondaire
+            currentIndex: 0,
+            smallCurrentIndex: 0 
+        },
+
+        // Méthodes à exécuter après le montage de l'instance Vue
+        mounted() {
+            this.startSlideshow(); // Lance le diaporama dès que l'application est montée
+        },
+
+        methods: {
+            // Fonction pour démarrer le diaporama
+            startSlideshow() {
+                // Met en place un intervalle de 3 secondes pour changer d'image
+                setInterval(() => {
+                    this.currentIndex = (this.currentIndex + 1) % this.images.length; 
+                    this.smallCurrentIndex = (this.smallCurrentIndex + 1) % this.smallImages.length;
+                }, 3000);
             }
-        });
-    </script>
+        }
+    });
+</script>
+
 </body>
 </html>

@@ -240,7 +240,7 @@ const { createApp } = Vue;
 createApp({
     data() {
         return {
-            selectedType: ''
+            selectedType: ''  // Permet de gérer dynamiquement les champs affichés
         };
     }
 }).mount('#app');

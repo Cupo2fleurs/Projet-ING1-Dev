@@ -173,22 +173,30 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p v-else>Aucun profil ne correspond à votre recherche.</p>
     </div>
     <script>
-        new Vue({
-            el: '#app',
-            data: {
-                search: '',
-                profiles: <?= json_encode($users) ?>
-            },
-            computed: {
-                filteredProfiles() {
-                    return this.profiles.filter(profil => {
-                        return Object.values(profil).some(value =>
-                            String(value).toLowerCase().includes(this.search.toLowerCase())
-                        );
-                    });
-                }
+    // Crée une nouvelle instance Vue.js
+    new Vue({
+        el: '#app',
+        
+        // Données de l'application
+        data: {
+            search: '',
+            profiles: <?= json_encode($users) ?> // Liste des profils utilisateurs en provenance du serveur (convertie en JSON avec PHP)
+        },
+
+        // Filtrer les profils en fonction de la recherche
+        computed: {
+            // Cette méthode retourne les profils filtrés en fonction de la chaîne de recherche
+            filteredProfiles() {
+                return this.profiles.filter(profil => {
+                    // Nous vérifions si une valeur de chaque profil contient la chaîne de recherche
+                    return Object.values(profil).some(value =>
+                        String(value).toLowerCase().includes(this.search.toLowerCase())
+                    );
+                });
             }
-        });
-    </script>
+        }
+    });
+</script>
+
 </body>
 </html>

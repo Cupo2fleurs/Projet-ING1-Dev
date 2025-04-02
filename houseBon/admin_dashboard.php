@@ -35,6 +35,7 @@ $stats = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <style>
+        /* Styles de base de la page */
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: #1e1e1e;
@@ -42,6 +43,8 @@ $stats = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin: 0;
             padding: 2rem;
         }
+
+        /* Conteneur principal */
         .container {
             background-color: #2a2a2a;
             padding: 2rem;
@@ -50,36 +53,47 @@ $stats = $stmt->fetchAll(PDO::FETCH_ASSOC);
             max-width: 1000px;
             margin: auto;
         }
+
+        /* Styles des titres */
         h1, h2 {
             color: #00bcd4;
             margin-bottom: 1rem;
         }
+
+        /* Tableaux et mise en page des données */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 1rem;
         }
+
         th, td {
             padding: 0.75rem;
             border: 1px solid #444;
             text-align: left;
         }
+
         th {
             background-color: #3a3a3a;
             color: #ffffff;
         }
+
         tr:nth-child(even) {
             background-color: #1e1e1e;
         }
+
         tr:hover {
             background-color: #333;
         }
+
+        /* Styles des boutons et inputs */
         select, input[type="number"] {
             padding: 0.5rem;
             border-radius: 8px;
             border: none;
             margin-right: 1rem;
         }
+
         button {
             background-color: #00bcd4;
             color: white;
@@ -89,9 +103,11 @@ $stats = $stmt->fetchAll(PDO::FETCH_ASSOC);
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         button:hover {
             background-color: #0097a7;
         }
+
         .btn-return {
             display: inline-block;
             margin-top: 2rem;
@@ -102,6 +118,7 @@ $stats = $stmt->fetchAll(PDO::FETCH_ASSOC);
             text-decoration: none;
             transition: background-color 0.3s ease;
         }
+
         .btn-return:hover {
             background-color: #388e3c;
         }
