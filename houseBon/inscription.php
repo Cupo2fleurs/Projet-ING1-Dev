@@ -71,14 +71,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #1e1e1e;
             color: #f0f0f0;
             margin: 0;
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 0;
             height: 100vh;
         }
 
+        .retour {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #00bcd4;
+            color: white;
+            padding: 10px 16px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .retour:hover {
+            background-color: #0097a7;
+        }
+
         .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .form-box {
             background-color: #2a2a2a;
             padding: 2rem;
             border-radius: 16px;
@@ -130,40 +151,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
+
+    <!-- Bouton retour affiché en haut à gauche -->
+    <a href="Accueil.php" class="retour">← Retour à l'accueil</a>
+
     <div class="container">
-        
-        <h1>Inscription</h1>
-        <form id="profilForm" method="POST" action="inscription.php" enctype="multipart/form-data">
-            <label for="nom">Nom :</label>
-            <input type="text" id="nom" name="nom" required>
+        <div class="form-box">
+            <h1>Inscription</h1>
+            <form method="POST" action="inscription.php" enctype="multipart/form-data">
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" required>
 
-            <label for="prenom">Prénom :</label>
-            <input type="text" id="prenom" name="prenom" required>
+                <label for="prenom">Prénom :</label>
+                <input type="text" id="prenom" name="prenom" required>
 
-            <label for="mdp">Mot de passe :</label>
-            <input type="password" id="mdp" name="mdp" required>
+                <label for="mdp">Mot de passe :</label>
+                <input type="password" id="mdp" name="mdp" required>
 
-            <label for="pseudo">Pseudo :</label>
-            <input type="text" id="pseudo" name="pseudo">
+                <label for="pseudo">Pseudo :</label>
+                <input type="text" id="pseudo" name="pseudo">
 
-            <label for="age">Âge :</label>
-            <input type="number" id="age" name="age" min="1" max="150">
+                <label for="age">Âge :</label>
+                <input type="number" id="age" name="age" min="1" max="150">
 
-            <label for="sexe">Sexe :</label>
-            <select id="sexe" name="sexe" required>
-                <option value="Homme">Homme</option>
-                <option value="Femme">Femme</option>
-                <option value="Autre">Autre</option>
-            </select>
+                <label for="sexe">Sexe :</label>
+                <select id="sexe" name="sexe" required>
+                    <option value="Homme">Homme</option>
+                    <option value="Femme">Femme</option>
+                    <option value="Autre">Autre</option>
+                </select>
 
-            <label for="born">Date de naissance :</label>
-            <input type="date" id="born" name="born">
+                <label for="born">Date de naissance :</label>
+                <input type="date" id="born" name="born">
 
-            <label for="photo">Photo :</label>
-            <input type="file" id="photo" name="photo" accept="image/*">
+                <label for="photo">Photo :</label>
+                <input type="file" id="photo" name="photo" accept="image/*">
 
-            <input type="submit" value="S'inscrire">
-        </form>
+                <input type="submit" value="S'inscrire">
+            </form>
+        </div>
     </div>
 </body>
 </html>
